@@ -80,20 +80,19 @@
   hosts: molecule
   gather_facts: false
   tasks:
-#    - name: 'Check uname'
-#      ansible.builtin.raw: uname -a
-#      register: result
-#      changed_when: false
-#
-#    - name: 'Display uname info'
-#      ansible.builtin.debug:
-#        msg: "{{ result.stdout }}"
+
+    - name: 'Check uname'
+      ansible.builtin.raw: uname -a
+      register: uname_result
+      changed_when: false
 
     - name: 'Read /etc/os-release'
       ansible.builtin.slurp:
         path: /etc/os-release
       register: osfile
 
-    - name: 'Show OS name'
+    - name: 'Show OS information'
       ansible.builtin.debug:
-        msg: "{{ osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"
+        msg:
+          - "uname -a: {{ uname_result.stdout }}"
+          - "PRETTY_NAME: {{ osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"
