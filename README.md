@@ -13,6 +13,7 @@ Our Dockerfiles:
 - [`Dockerfile.fedora42`](Dockerfile.fedora42): Fedora 42
 - [`Dockerfile.ubuntu2404`](Dockerfile.ubuntu2404): Ubuntu 24.04 (Noble Numbat)
 - [`Dockerfile.ubuntu2204`](Dockerfile.ubuntu2204): Ubuntu 22.04 (Jammy Jellyfish)
+- [`Dockerfile.sle15`](Dockerfile.sle15): SLE BCI (SLES 15) based
 
 Example Dockerfiles:
 
@@ -28,6 +29,7 @@ podman build -f Dockerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
 podman build -f Dockerfile.centos-stream8 -t molecule-platform:centos8 .
 podman build --pull -f Dockerfile.centos-stream9 -t molecule-platform:centos9 .
 podman build --pull -f Dockerfile.fedora42 -t molecule-platform:fedora42 .
+podman build -f Dockerfile.sle15 -t molecule-platform:sle15 .
 ```
 
 ## Additional Images
@@ -40,3 +42,12 @@ Other images that already contain systemd:
 ## Molecule Example
 
 An example Molecule configuration can be found in [`molecule/default/`](molecule/default).
+
+Run with:
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install molecule ansible-core
+molecule test
+```

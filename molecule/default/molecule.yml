@@ -34,3 +34,6 @@ platforms:
   - name: molecule-ubuntu2404
     image: localhost/molecule-platform:ubuntu2404
     command: /sbin/init
+  - name: molecule-sle15
+    image: localhost/molecule-platform:sle15
+    command: /sbin/init

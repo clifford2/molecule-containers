@@ -12,3 +12,4 @@
 .awx.env
 export.json
 .tmp/
+.venv/

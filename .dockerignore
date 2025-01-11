@@ -1,5 +1,6 @@
-/.git
+/.git/
 /.yamllint
 /README.md
 /Dockerfile*
-/molecule
+/molecule/
+.venv/
