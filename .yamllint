@@ -1,0 +1,31 @@
+---
+# vim: set ignorecase filetype=yaml:
+#
+# yamllint configuration
+#
+extends: default
+
+rules:
+  braces:
+    # Required for ansible-lint 24.9.2 compatibility
+    max-spaces-inside: 1
+  comments:
+    # Required for ansible-lint 24.9.2 compatibility
+    min-spaces-from-content: 1
+  # comments-indentation:
+  #   ignore: |
+  #     */*/meta/main.yml
+  # Required for ansible-lint 24.9.2 compatibility
+  comments-indentation: disable
+  document-start:
+    level: error
+  line-length:
+    max: 240
+    level: warning
+  octal-values:
+    # Required for ansible-lint 24.9.2 compatibility
+    forbid-implicit-octal: true
+    # Required for ansible-lint 24.9.2 compatibility
+    forbid-explicit-octal: true
+  truthy:
+    level: error

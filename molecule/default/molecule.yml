@@ -1,0 +1,36 @@
+---
+driver:
+  name: default
+  options:
+    managed: false
+    login_cmd_template: "podman exec -ti {instance} bash"
+    ansible_connection_options:
+      ansible_connection: podman
+provisioner:
+  name: ansible
+  playbooks:
+    create: create.yml
+    converge: converge.yml
+    destroy: destroy.yml
+platforms:
+  - name: molecule-ubi9
+    image: registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956
+    command: /sbin/init
+  - name: molecule-centos8
+    image: localhost/molecule-platform:centos8
+    command: /sbin/init
+  - name: molecule-centos9
+    image: localhost/molecule-platform:centos9
+    command: /sbin/init
+  - name: molecule-centos10
+    image: quay.io/centos/centos:stream10
+    command: /sbin/init
+  - name: molecule-debian12
+    image: localhost/molecule-platform:debian12
+    command: /sbin/init
+  - name: molecule-ubuntu2204
+    image: localhost/molecule-platform:ubuntu2204
+    command: /sbin/init
+  - name: molecule-ubuntu2404
+    image: localhost/molecule-platform:ubuntu2404
+    command: /sbin/init

@@ -1,0 +1,14 @@
+*.swp
+*.bak
+*.log
+.vscode
+.DS_Store
+.bash_history
+.vscode
+.lesshst
+*/__pycache__/*
+*.retry
+.tower_cli.cfg
+.awx.env
+export.json
+.tmp/
