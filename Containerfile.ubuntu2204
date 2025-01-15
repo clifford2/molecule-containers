@@ -28,6 +28,8 @@
 # All modifications to the original work is copyright 2025 Clifford Weinmann,
 # and shared under the same terms as above.
 
+ARG VERSION=1.0.0
+
 # Ubuntu 22.04 LTS
 FROM docker.io/library/ubuntu:jammy-20240911.1
 

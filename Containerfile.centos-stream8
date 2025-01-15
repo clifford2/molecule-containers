@@ -1,5 +1,7 @@
 # Based on UBI 9 Dockerfile
 
+ARG VERSION=1.0.0
+
 FROM quay.io/centos/centos:stream8
 
 RUN  echo 'Fix repos' \
