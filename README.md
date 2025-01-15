@@ -7,13 +7,15 @@ for use by Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule
 
 Our Containerfiles:
 
-- [`Containerfile.centos-stream8`](Containerfile.centos-stream8): CentOS Stream 8
-- [`Containerfile.centos-stream9`](Containerfile.centos-stream9): CentOS Stream 9
-- [`Containerfile.debian12`](Containerfile.debian12): Debian 12 (Bookworm)
-- [`Containerfile.fedora42`](Containerfile.fedora42): Fedora 42
-- [`Containerfile.ubuntu2404`](Containerfile.ubuntu2404): Ubuntu 24.04 (Noble Numbat)
-- [`Containerfile.ubuntu2204`](Containerfile.ubuntu2204): Ubuntu 22.04 (Jammy Jellyfish)
-- [`Containerfile.sle15`](Containerfile.sle15): SLE BCI (SLES 15) based
+| Linux Distribution             | Containerfile                                                  | Image name                   |
+| ------------------------------ | -------------------------------------------------------------- | ---------------------------- |
+| CentOS Stream 8                | [`Containerfile.centos-stream8`](Containerfile.centos-stream8) | molecule-platform:centos8    |
+| CentOS Stream 9                | [`Containerfile.centos-stream9`](Containerfile.centos-stream9) | molecule-platform:centos9    |
+| Debian 12 (Bookworm)           | [`Containerfile.debian12`](Containerfile.debian12)             | molecule-platform:debian12   |
+| Fedora 42                      | [`Containerfile.fedora42`](Containerfile.fedora42)             | molecule-platform:fedora42   |
+| SLE BCI (SLES 15) based        | [`Containerfile.sle15`](Containerfile.sle15)                   | molecule-platform:sle15      |
+| Ubuntu 22.04 (Jammy Jellyfish) | [`Containerfile.ubuntu2204`](Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
+| Ubuntu 24.04 (Noble Numbat)    | [`Containerfile.ubuntu2404`](Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
 
 Example Containerfiles:
 
@@ -26,13 +28,13 @@ You can build all container images with `make build`,
 or build individual images with these commands:
 
 ```sh
-podman build -f Containerfile.debian12 -t molecule-platform:debian12 .
-podman build -f Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
-podman build -f Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
 podman build -f Containerfile.centos-stream8 -t molecule-platform:centos8 .
 podman build --pull -f Containerfile.centos-stream9 -t molecule-platform:centos9 .
+podman build -f Containerfile.debian12 -t molecule-platform:debian12 .
 podman build --pull -f Containerfile.fedora42 -t molecule-platform:fedora42 .
 podman build -f Containerfile.sle15 -t molecule-platform:sle15 .
+podman build -f Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
+podman build -f Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
 ```
 
 ## Additional Images
