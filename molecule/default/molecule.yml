@@ -14,7 +14,7 @@ provisioner:
     destroy: destroy.yml
 platforms:
   - name: molecule-ubi9
-    image: registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956
+    image: registry.access.redhat.com/ubi9/ubi-init:9.5-1736424979
     command: /sbin/init
   - name: molecule-centos8
     image: localhost/molecule-platform:centos8

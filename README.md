@@ -19,8 +19,8 @@ Our Containerfiles:
 
 Example Containerfiles:
 
-- Our Debian & Ubuntu images are based on `Containerfile.example-debian`, from <https://github.com/alehaa/docker-debian-systemd>
-- Our images for the Red Hat family are based on UBI 9 - `Containerfile.example-ubi9-init`, from `registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956`
+- Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](Containerfile.example-debian), from <https://github.com/alehaa/docker-debian-systemd>
+- Our images for the Red Hat family are based on UBI 9 - [`Containerfile.example-ubi9-init`](Containerfile.example-ubi9-init), from [`registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956`](https://catalog.redhat.com/software/containers/ubi9-init/6183297540a2d8e95c82e8bd?image=67629d3c4a112c1ff1bdbb70&container-tabs=dockerfile)
 
 ## Build Instructions
 
