@@ -24,8 +24,15 @@ Example Containerfiles:
 
 ## Build Instructions
 
-You can build all container images with `make build`,
-or build individual images with these commands:
+Container images built from these files are available at <https://hub.docker.com/r/cliffordw/molecule-platform>.
+
+To build your own images from this source, you can build all images with:
+
+```sh
+make build
+```
+
+Or build individual images with these commands:
 
 ```sh
 podman build -f Containerfile.centos-stream8 -t molecule-platform:centos8 .
