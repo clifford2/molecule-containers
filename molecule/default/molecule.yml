@@ -17,26 +17,32 @@ platforms:
     image: registry.access.redhat.com/ubi9/ubi-init:9.5-1736424979
     command: /sbin/init
   - name: molecule-centos8
-    image: localhost/molecule-platform:centos8
+    image: molecule-platform:centos-stream8.v1.0.0
     command: /sbin/init
   - name: molecule-centos9
-    image: localhost/molecule-platform:centos9
+    image: molecule-platform:centos-stream9.v1.0.0
     command: /sbin/init
   - name: molecule-centos10
     image: quay.io/centos/centos:stream10
     command: /sbin/init
+  - name: molecule-docker-fedora40
+    image: molecule-platform:fedora40.v1.0.0
+    command: /sbin/init
+  - name: molecule-docker-fedora41
+    image: molecule-platform:fedora41.v1.0.0
+    command: /sbin/init
   - name: molecule-docker-fedora42
-    image: localhost/molecule-platform:fedora42
+    image: molecule-platform:fedora42.v1.0.1
     command: /sbin/init
   - name: molecule-debian12
-    image: localhost/molecule-platform:debian12
+    image: molecule-platform:debian12.v1.0.0
     command: /sbin/init
   - name: molecule-ubuntu2204
-    image: localhost/molecule-platform:ubuntu2204
+    image: molecule-platform:ubuntu2204.v1.0.0
     command: /sbin/init
   - name: molecule-ubuntu2404
-    image: localhost/molecule-platform:ubuntu2404
+    image: molecule-platform:ubuntu2404.v1.0.0
     command: /sbin/init
   - name: molecule-sle15
-    image: localhost/molecule-platform:sle15
+    image: molecule-platform:sle15.v1.0.0
     command: /sbin/init

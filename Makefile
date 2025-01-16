@@ -1,5 +1,7 @@
 # Build with: make TARGETARCH=(arm64v8|amd64|ppc64le) build-package
 
+PLATFORMS := centos-stream8 centos-stream9 debian12 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
+
 # Use podman or docker?
 ifeq ($(shell command -v podman 2> /dev/null),)
 	CONTAINER_ENGINE := docker
@@ -29,18 +31,24 @@ about:
 
 .PHONY: build
 build:
-	@for platform in centos-stream8 centos-stream9 debian12 fedora42 sle15 ubuntu2204 ubuntu2404; do \
+	@for platform in $(PLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
 		$(BUILD_CMD) -f Containerfile.$$platform -t molecule-platform:$$platform.$$VER . ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
 	done
 
-.PHONY: push
-push:
-	@for platform in centos-stream8 centos-stream9 debian12 fedora42 sle15 ubuntu2204 ubuntu2404; do \
+.PHONY: tag
+tag:
+	@for platform in $(PLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER docker.io/cliffordw/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER docker.io/cliffordw/molecule-platform:$$platform ; \
+	done
+
+.PHONY: push
+push: tag
+	@for platform in $(PLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) push docker.io/cliffordw/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) push docker.io/cliffordw/molecule-platform:$$platform ; \
 	done

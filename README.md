@@ -12,6 +12,8 @@ Our Containerfiles:
 | CentOS Stream 8                | [`Containerfile.centos-stream8`](Containerfile.centos-stream8) | molecule-platform:centos8    |
 | CentOS Stream 9                | [`Containerfile.centos-stream9`](Containerfile.centos-stream9) | molecule-platform:centos9    |
 | Debian 12 (Bookworm)           | [`Containerfile.debian12`](Containerfile.debian12)             | molecule-platform:debian12   |
+| Fedora 40                      | [`Containerfile.fedora40`](Containerfile.fedora40)             | molecule-platform:fedora40   |
+| Fedora 41                      | [`Containerfile.fedora41`](Containerfile.fedora41)             | molecule-platform:fedora41   |
 | Fedora 42                      | [`Containerfile.fedora42`](Containerfile.fedora42)             | molecule-platform:fedora42   |
 | SLE BCI (SLES 15) based        | [`Containerfile.sle15`](Containerfile.sle15)                   | molecule-platform:sle15      |
 | Ubuntu 22.04 (Jammy Jellyfish) | [`Containerfile.ubuntu2204`](Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
@@ -38,6 +40,8 @@ Or build individual images with these commands:
 podman build -f Containerfile.centos-stream8 -t molecule-platform:centos8 .
 podman build --pull -f Containerfile.centos-stream9 -t molecule-platform:centos9 .
 podman build -f Containerfile.debian12 -t molecule-platform:debian12 .
+podman build --pull -f Containerfile.fedora40 -t molecule-platform:fedora40 .
+podman build --pull -f Containerfile.fedora41 -t molecule-platform:fedora41 .
 podman build --pull -f Containerfile.fedora42 -t molecule-platform:fedora42 .
 podman build -f Containerfile.sle15 -t molecule-platform:sle15 .
 podman build -f Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
@@ -49,7 +53,7 @@ podman build -f Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
 Other images that already contain systemd:
 
 - `registry.access.redhat.com/ubi9/ubi-init:9.5`
-- `quay.io/centos/centos:stream10`
+- [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
 ## Molecule Example
 
