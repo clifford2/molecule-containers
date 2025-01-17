@@ -32,15 +32,15 @@ about:
 .PHONY: build
 build:
 	@for platform in $(PLATFORMS); do \
-		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
-		$(BUILD_CMD) -f Containerfile.$$platform -t molecule-platform:$$platform.$$VER . ; \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
+		$(BUILD_CMD) -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
 	done
 
 .PHONY: tag
 tag:
 	@for platform in $(PLATFORMS); do \
-		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER docker.io/cliffordw/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER docker.io/cliffordw/molecule-platform:$$platform ; \
 	done
@@ -48,7 +48,7 @@ tag:
 .PHONY: push
 push: tag
 	@for platform in $(PLATFORMS); do \
-		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' Containerfile.$$platform) ; \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) push docker.io/cliffordw/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) push docker.io/cliffordw/molecule-platform:$$platform ; \
 	done
