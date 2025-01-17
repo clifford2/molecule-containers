@@ -1,0 +1,3 @@
+ARG VERSION=20250115
+FROM scratch
+ADD --chown=107:107 --chmod=0644 https://cloud-images.ubuntu.com/noble/20250115/noble-server-cloudimg-amd64.img /disk/
