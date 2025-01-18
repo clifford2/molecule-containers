@@ -1,0 +1,76 @@
+---
+driver:
+  name: default
+dependency:
+  name: galaxy
+  options:
+    requirements-file: ../shared/kubevirt-requirements.yml
+platforms:
+#  # Needs authentication to pull imag
+#  - name: ostest-rhel9
+#    image: registry.redhat.io/rhel9/rhel-guest-image
+#    namespace: molecule
+#    ssh_service:
+#      type: NodePort
+#    ansible_user: cloud-user
+#    memory: 1Gi
+  - name: ostest-centos9
+    image: docker.io/cliffordw/kubevirt-containerdisk:centos-stream9.v20250113.0
+    namespace: molecule
+    ssh_service:
+      type: NodePort
+    ansible_user: molecule
+    memory: 1Gi
+  - name: ostest-centos10
+    image: docker.io/cliffordw/kubevirt-containerdisk:centos-stream10.v20250113.0
+    namespace: molecule
+    ssh_service:
+      type: NodePort
+    ansible_user: molecule
+    memory: 1Gi
+#  - name: ostest-debian12
+#    image: docker.io/cliffordw/kubevirt-containerdisk:debian12.v20250115-1993
+#    namespace: molecule
+#    ssh_service:
+#      type: NodePort
+#    ansible_user: molecule
+#    memory: 1Gi
+  - name: ostest-opensuse15
+    image: docker.io/cliffordw/kubevirt-containerdisk:opensuse-15.6.v1.135
+    namespace: molecule
+    ssh_service:
+      type: NodePort
+    ansible_user: molecule
+    memory: 1Gi
+  - name: ostest-ubuntu24
+    image: docker.io/cliffordw/kubevirt-containerdisk:ubuntu2404.v20250115
+    namespace: molecule
+    ssh_service:
+      type: NodePort
+    ansible_user: molecule
+    memory: 1Gi
+provisioner:
+  name: ansible
+  playbooks:
+    create: ../shared/kubevirt-create.yml
+    destroy: ../shared/kubevirt-destroy.yml
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+      callback_whitelist: profile_tasks, timer, yaml
+    ssh_connection:
+      pipelining: false
+  log: true
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - destroy

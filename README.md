@@ -1,9 +1,18 @@
-# Systemd-enabled Container Images for Ansible Molecule
+# Container Images for Ansible Molecule
 
-These Containerfiles build container images with systemd and Python,
-for use by Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/).
+## About
 
-## Containerfiles
+This repository is used for building container images for various Linux distributions, for use by Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/).
+
+Two varieties are available.
+
+The first set of files build images for use with podman/docker platforms.
+
+The second set of files build KubeVirt containerDisk images.
+
+## Podman / Docker Images
+
+### Containerfiles
 
 Our Containerfiles (in the [`podman/`](podman) directory):
 
@@ -24,7 +33,7 @@ Example Containerfiles:
 - Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian), from <https://github.com/alehaa/docker-debian-systemd>
 - Our images for the Red Hat family are based on UBI 9 - [`Containerfile.example-ubi9-init`](podman/Containerfile.example-ubi9-init), from [`registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956`](https://catalog.redhat.com/software/containers/ubi9-init/6183297540a2d8e95c82e8bd?image=67629d3c4a112c1ff1bdbb70&container-tabs=dockerfile)
 
-## Build Instructions
+### Build Instructions
 
 Container images built from these files are available at <https://hub.docker.com/r/cliffordw/molecule-platform>.
 
@@ -48,16 +57,16 @@ podman build -f podman/Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 
 podman build -f podman/Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
 ```
 
-## Additional Images
+### Additional Images
 
 Other images that already contain systemd:
 
 - `registry.access.redhat.com/ubi9/ubi-init:9.5`
 - [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
-## Molecule Example
+### Molecule Example
 
-An example Molecule configuration can be found in [`molecule/default/`](molecule/default).
+An example Molecule configuration can be found in [`molecule/podman/`](molecule/podman).
 
 Run with:
 
@@ -65,5 +74,44 @@ Run with:
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install molecule 'ansible-core<2.17'
-molecule test
+molecule test -s podman
+```
+
+## KubeVirt containerDisk Images
+
+An example Molecule configuration can be found in [`molecule/podman/`](molecule/podman).
+
+### Containerfiles
+
+Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
+
+### Build Instructions
+
+Container images built from these files are available at <https://hub.docker.com/r/cliffordw/kubevirt-containerdisk>.
+
+To build your own images from this source, you can build all images with:
+
+```sh
+make vmbuild
+```
+
+### Additional Images
+
+Other available images (requires authentication to pull):
+
+- `registry.redhat.io/rhel9/rhel-guest-image`
+- `registry.redhat.io/rhel8/rhel-guest-image`
+
+### Molecule Example
+
+An example Molecule configuration can be found in [`molecule/kubevirt/`](molecule/kubevirt).
+
+Run with:
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install molecule 'ansible-core<2.17'
+python3 -m pip install -r molecule/shared/kubevirt-requirements.txt
+molecule test -s kubevirt
 ```

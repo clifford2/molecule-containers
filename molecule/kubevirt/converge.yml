@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: Copyright © 2025 Azul Consulting
+# SPDX-FileContributor: Clifford Weinmann
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+---
+- name: Include ostest playbook
+  ansible.builtin.import_playbook: ../../misc/ostest.yml
