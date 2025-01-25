@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
+
 ARG VERSION=20250113.0
 FROM scratch
 ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/10-stream/x86_64/images/CentOS-Stream-GenericCloud-10-20250113.0.x86_64.qcow2 /disk/

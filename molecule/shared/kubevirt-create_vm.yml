@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+#
+# SPDX-License-Identifier: BSD-2-Clause
+
 ---
 - name: Create VM in KubeVirt
   kubernetes.core.k8s: # Uses the k8s module from the kubernetes.core Ansible collection

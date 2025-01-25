@@ -1,7 +1,6 @@
-# SPDX-FileCopyrightText: Copyright © 2025 Azul Consulting
-# SPDX-FileContributor: Clifford Weinmann
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: BSD-2-Clause
 
 ---
 - name: Include ostest playbook

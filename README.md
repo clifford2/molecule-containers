@@ -115,3 +115,18 @@ python3 -m pip install molecule 'ansible-core<2.17'
 python3 -m pip install -r molecule/shared/kubevirt-requirements.txt
 molecule test -s kubevirt
 ```
+
+## License & Disclaimer
+
+The original Dockerfile is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
+
+Modifications, and all other files are © Clifford Weinmann <https://www.cliffordweinmann.com/>.
+
+This code is provided *AS IS*, without warranty of any kind.
+See [`LICENSES/`](LICENSES) for the full license text and disclaimers.
+
+## Security
+
+This code is updated as often as possible, but support is provided on a best effort basis only.
+
+Please report any problems or vulnerabilities by opening a [GitHub issue here](https://github.com/clifford2/molecule-containers/issues).
