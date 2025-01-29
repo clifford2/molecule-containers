@@ -40,7 +40,7 @@ Container images built from these files are available at <https://hub.docker.com
 To build your own images from this source, you can build all images with:
 
 ```sh
-make build
+make build-container
 ```
 
 Or build individual images with these commands:
@@ -92,7 +92,7 @@ Container images built from these files are available at <https://hub.docker.com
 To build your own images from this source, you can build all images with:
 
 ```sh
-make vmbuild
+make build-vm
 ```
 
 ### Additional Images
