@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 #
-# SPDX-License-Identifier: BSD-2-Clause
+# SPDX-License-Identifier: MIT-0
 
 # Example Dockerfile from registry.access.redhat.com/ubi9/ubi-init:9.5-1734512956
 

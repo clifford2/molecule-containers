@@ -4,4 +4,4 @@ version = 1
 path = ["*.md", ".yamllint", "molecule/shared/kubevirt-requirements.txt"]
 precedence = "closest"
 SPDX-FileCopyrightText = "© 2025 Clifford Weinmann <clifford@weinmann.africa>"
-SPDX-License-Identifier = "BSD-2-Clause"
+SPDX-License-Identifier = "MIT-0"
