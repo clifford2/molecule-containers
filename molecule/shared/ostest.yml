@@ -1,0 +1,247 @@
+# Show values of key vars containing OS information
+---
+- name: "Show OS details"
+  hosts: all
+  become: false
+  gather_facts: false
+  tasks:
+
+    - name: 'Test whether we already have os_family info'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['os_family'] | default('*undefined*', true) }}"
+
+    - name: 'Collect required facts'
+      ansible.builtin.setup:
+        gather_subset:
+          - "{{ item }}"
+      when: ansible_facts[item] is undefined
+      loop:
+        - os_family
+        - virtual
+
+    - name: 'Test whether we now have os_family info'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['os_family'] | default('*undefined*', true) }}"
+
+    # Test whether we can skip this if we already have the data
+    - name: 'Collect os_family info again, just for laughs'
+      ansible.builtin.setup:
+        gather_subset:
+          - os_family
+      when: ansible_facts['os_family'] is undefined
+
+    - name: "Display all ansible_facts"
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts }}"
+        verbosity: 1
+
+    - name: "Display key ansible_facts"
+      ansible.builtin.debug:
+        msg: "grepfriendly: {{ inventory_hostname }}: {{ item }}: {{ ansible_facts[item] | lower }}"
+      loop:
+        - system
+        - os_family
+        - distribution
+        - distribution_major_version
+        - distribution_release
+        - distribution_version
+        - virtualization_role
+        - virtualization_type
+        - architecture
+
+    - name: "Check whether we're in a container"
+      ansible.builtin.set_fact:
+        running_in_container: "{{ ((ansible_facts['virtualization_role'] == 'guest') and ((ansible_facts['virtualization_type'] == 'container') or (ansible_facts['virtualization_type'] == 'podman') or (ansible_facts['virtualization_type'] == 'docker'))) | bool }}"
+
+    - name: 'Condition example: are we in a container?'
+      ansible.builtin.debug:
+        msg: "In a container? {{ running_in_container }}"
+
+    # Examples of conditional execution
+    - name: 'Condition example: are we running a Debian based Linux distribution?'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.os_family }}"
+      when: ansible_facts.os_family | lower == 'debian'
+
+    - name: 'Condition example: are we running a Red Hat based Linux distribution?'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.os_family }}"
+      when: ansible_facts.os_family | lower == 'redhat'
+
+    - name: 'Condition example: are we running a SUSE based Linux distribution?'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.os_family }}"
+      when: ansible_facts.os_family | lower == 'suse'
+
+    - name: 'Condition example: are we running AIX?'
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.os_family }}"
+      when: ansible_facts.os_family | lower == 'aix'
+
+    - name: 'Is this an AIX WPAR?'
+      when: ansible_facts.os_family | lower == 'aix'
+      block:
+
+        - name: 'Check whether this is a WPAR'
+          ansible.builtin.command: uname -W
+          register: wpar
+          changed_when: false
+
+        - name: 'Set is_wpar WPAR fact'
+          ansible.builtin.set_fact:
+            is_wpar: "{{ wpar.stdout_lines[0] | trim | int > 0 }}"
+
+        - name: 'Set not_wpar WPAR fact'
+          ansible.builtin.set_fact:
+            not_wpar: "{{ wpar.stdout_lines[0] | trim | int == 0 }}"
+
+        - name: 'Condition example:  AIX - running in a WPAR?'
+          ansible.builtin.debug:
+            msg: 'This is an AIX WPAR'
+          when:
+            - is_wpar
+
+        - name: 'Condition example:  AIX - not running in a WPAR?'
+          ansible.builtin.debug:
+            msg: 'This is an AIX physical / virtual host, not a WPAR'
+          when:
+            - not_wpar
+
+    # Newer Ansible versions fail in RHEL 8 based systems with (in dnf module):
+    # SyntaxError: future feature annotations is not defined
+    # Details: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
+    - name: 'Check Ansible compatibility for RHEL 8 or older'
+      when:
+        - ansible_facts.os_family | lower == 'redhat'
+        - (ansible_facts.distribution | lower == 'redhat') or (ansible_facts.distribution | lower == 'centos')
+      block:
+
+        - name: 'Check compatibility with RHEL'
+          ansible.builtin.set_fact:
+            rhel8_compat: "{{ (ansible_version.full is ansible.builtin.version('2.17.0', '<')) or ((ansible_facts['distribution_major_version'] | int) > 8) }}"
+
+        - name: 'Show RHEL compatibility status'
+          ansible.builtin.debug:
+            msg: "We can{% if not rhel8_compat %}'t{% endif %} support {{ ansible_facts.distribution }} {{ ansible_facts['distribution_major_version'] }} with Ansible {{ ansible_version.full }}"
+
+
+## Output samples
+# [ansible@musplasnmaster1 playbooks]$ grep -w distribution: ostest.out | sort|uniq
+# "msg": "distribution: redhat"
+# "msg": "distribution: ubuntu"
+# [ansible@musplasnmaster1 playbooks]$ grep -w distribution_version: ostest.out | sort|uniq
+# "msg": "distribution_version: 20.04"
+# "msg": "distribution_version: 22.04"
+# "msg": "distribution_version: 8.6"
+# "msg": "distribution_version: 8.7"
+# "msg": "distribution_version: 9.2"
+# [ansible@musplasnmaster1 playbooks]$ grep -w distribution_major_version: ostest.out | sort|uniq
+# "msg": "distribution_major_version: 20"
+# "msg": "distribution_major_version: 22"
+# "msg": "distribution_major_version: 8"
+# "msg": "distribution_major_version: 9"
+
+# CentOS Stream 9:
+# "msg": "os_family: redhat"
+# "msg": "distribution: centos"
+# "msg": "distribution_major_version: 9"
+# "msg": "distribution_release: stream"
+# "msg": "distribution_version: 9"
+
+# $ grep grepf /tmp/ostest.out|sort
+# "grepfriendly: fcb-ks-rhel8: distribution_major_version: 8"
+# "grepfriendly: fcb-ks-rhel8: distribution: redhat"
+# "grepfriendly: fcb-ks-rhel8: distribution_release: ootpa"
+# "grepfriendly: fcb-ks-rhel8: distribution_version: 8.8"
+# "grepfriendly: fcb-ks-rhel8: os_family: redhat"
+# "grepfriendly: fcb-ks-rhel9: distribution_major_version: 9"
+# "grepfriendly: fcb-ks-rhel9: distribution: redhat"
+# "grepfriendly: fcb-ks-rhel9: distribution_release: plow"
+# "grepfriendly: fcb-ks-rhel9: distribution_version: 9.3"
+# "grepfriendly: fcb-ks-rhel9: os_family: redhat"
+# "grepfriendly: lab-test1: distribution: centos"
+# "grepfriendly: lab-test1: distribution_major_version: 9"
+# "grepfriendly: lab-test1: distribution_release: stream"
+# "grepfriendly: lab-test1: distribution_version: 9"
+# "grepfriendly: lab-test1: os_family: redhat"
+# "grepfriendly: localhost: distribution_major_version: 23"
+# "grepfriendly: localhost: distribution_release: mantic"
+# "grepfriendly: localhost: distribution: ubuntu"
+# "grepfriendly: localhost: distribution_version: 23.10"
+# "grepfriendly: localhost: os_family: debian"
+# "grepfriendly: tmp-moosa1: distribution_major_version: 22"
+# "grepfriendly: tmp-moosa1: distribution_release: jammy"
+# "grepfriendly: tmp-moosa1: distribution: ubuntu"
+# "grepfriendly: tmp-moosa1: distribution_version: 22.04"
+# "grepfriendly: tmp-moosa1: os_family: debian"
+# "grepfriendly: zazu: distribution: fedora"
+# "grepfriendly: zazu: distribution_major_version: 40"
+# "grepfriendly: zazu: distribution_release: "
+# "grepfriendly: zazu: distribution_version: 40"
+# "grepfriendly: zazu: os_family: redhat"
+
+# Oracle Linux 7:
+# "os_family: RedHat"
+# "distribution: OracleLinux"
+# "distribution_file_variety: OracleLinux"
+# "distribution_release: NA"
+# "distribution_major_version: 7"
+
+## Virtualization examples
+
+# Inside podman container:
+
+# "ansible_virtualization_role": "guest",
+# "ansible_virtualization_tech_guest": [
+# 	"container",
+# 	"podman"
+# ],
+# "ansible_virtualization_tech_host": [
+# 	"kvm"
+# ],
+# "ansible_virtualization_type": "podman",
+
+# Linux bare metal host with KVM installed:
+
+# "ansible_virtualization_role": "host",
+# "ansible_virtualization_tech_guest": [],
+# "ansible_virtualization_tech_host": [
+# 	"kvm"
+# ],
+# "ansible_virtualization_type": "kvm",
+
+# Proxmox host:
+
+# "ansible_virtualization_role": "host",
+# "ansible_virtualization_tech_guest": [],
+# "ansible_virtualization_tech_host": [
+# 	"kvm"
+# ],
+# "ansible_virtualization_type": "kvm",
+
+# KVM guest:
+
+# "ansible_virtualization_role": "guest",
+# "ansible_virtualization_tech_guest": [
+# 	"kvm"
+# ],
+# "ansible_virtualization_tech_host": [
+# 	"kvm"
+# ],
+# "ansible_virtualization_type": "kvm",
+
+# KubeVirt VM:
+
+# molecule-centos9: virtualization_role: guest
+# molecule-centos9: virtualization_type: kubevirt
+
+# macOS
+
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: system: darwin"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: os_family: darwin"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: distribution: macosx"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: distribution_major_version: 15"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: distribution_release: 24.2.0"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: distribution_version: 15.2"
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: virtualization_role: "
+# "grepfriendly: ec2-54-210-32-190.compute-1.amazonaws.com: virtualization_type: "

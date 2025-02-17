@@ -29,6 +29,9 @@ platforms:
   - name: molecule-centos10
     image: quay.io/centos/centos:stream10
     command: /sbin/init
+  - name: molecule-debian12
+    image: molecule-platform:debian12.v1.0.2
+    command: /sbin/init
   - name: molecule-docker-fedora40
     image: molecule-platform:fedora40.v1.0.0
     command: /sbin/init
@@ -38,15 +41,12 @@ platforms:
   - name: molecule-docker-fedora42
     image: molecule-platform:fedora42.v1.0.1
     command: /sbin/init
-  - name: molecule-debian12
-    image: molecule-platform:debian12.v1.0.0
+  - name: molecule-sle15
+    image: molecule-platform:sle15.v1.0.2
     command: /sbin/init
   - name: molecule-ubuntu2204
-    image: molecule-platform:ubuntu2204.v1.0.0
+    image: molecule-platform:ubuntu2204.v1.0.1
     command: /sbin/init
   - name: molecule-ubuntu2404
-    image: molecule-platform:ubuntu2404.v1.0.0
-    command: /sbin/init
-  - name: molecule-sle15
-    image: molecule-platform:sle15.v1.0.0
+    image: molecule-platform:ubuntu2404.v1.0.1
     command: /sbin/init

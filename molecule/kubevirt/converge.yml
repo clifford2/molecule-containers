@@ -4,4 +4,4 @@
 
 ---
 - name: Include ostest playbook
-  ansible.builtin.import_playbook: ../../misc/ostest.yml
+  ansible.builtin.import_playbook: ../shared/ostest.yml

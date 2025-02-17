@@ -14,6 +14,6 @@
           - os_family
           - distribution
 
-    - name: 'Replace this task with one that validates your content'
+    - name: 'Show some facts about our container'
       ansible.builtin.debug:
-        msg: "This is the effective test on os_family {{ ansible_facts['os_family'] | lower }} and distribution {{ ansible_facts['distribution'] | lower }} version {{ ansible_facts['distribution_major_version'] }}"
+        msg: "Running on: architecture {{ ansible_facts['architecture'] }} - os_family {{ ansible_facts['os_family'] | lower }} - distribution {{ ansible_facts['distribution'] | lower }} version {{ ansible_facts['distribution_major_version'] }}"

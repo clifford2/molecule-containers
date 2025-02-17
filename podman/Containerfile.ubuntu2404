@@ -5,10 +5,10 @@
 
 # Based on original code from <https://github.com/alehaa/docker-debian-systemd>.
 
-ARG VERSION=1.0.0
+ARG VERSION=1.0.1
 
 # Ubuntu 24.04 LTS
-FROM docker.io/library/ubuntu:noble-20241118.1
+FROM docker.io/library/ubuntu:noble-20250127
 
 # Configure the debconf frontend.
 #
