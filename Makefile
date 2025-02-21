@@ -39,6 +39,14 @@ all: build-container build-vm
 about:
 	@echo "We're using $(CONTAINER_ENGINE) on $(BUILDARCH)"
 
+# Get current podman/docker container image versions
+.PHONY: showver-container
+showver-container:
+	@for platform in $(CTPLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
+		echo "molecule-platform:$$platform.$$VER" ; \
+	done
+
 # Build podman/docker container images
 .PHONY: build-container
 build-container:
@@ -50,11 +58,20 @@ build-container:
 
 # Tag podman/docker container images
 .PHONY: tag-container
-tag-container:
+tag-container: .updatever-container
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER $(CTREGISTRY)/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER $(CTREGISTRY)/molecule-platform:$$platform ; \
+	done
+
+# Update container image versions in molecule/podman/molecule.yml
+.PHONY: .updatever-container
+.updatever-container:
+	@for platform in $(CTPLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
+		echo "molecule-platform:$$platform.$$VER" ; \
+		sed -i -e "s|molecule-platform:$$platform..*|molecule-platform:$$platform.$$VER|" molecule/podman/molecule.yml ; \
 	done
 
 # Push podman/docker container images
@@ -64,6 +81,14 @@ push-container: tag-container
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) push $(CTREGISTRY)/molecule-platform:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) push $(CTREGISTRY)/molecule-platform:$$platform ; \
+	done
+
+# Show current KubeVirt containerDisk image versions
+.PHONY: showver-vm
+showver-vm:
+	@for platform in $(VMPLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
+		echo kubevirt-containerdisk:$$platform.$$VER ; \
 	done
 
 # Build KubeVirt containerDisk images
@@ -77,12 +102,21 @@ build-vm:
 
 # Tag KubeVirt containerDisk images
 .PHONY: tag-vm
-tag-vm:
+tag-vm: .updatever-vm
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) tag kubevirt-containerdisk:$$platform.$$VER $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) tag kubevirt-containerdisk:$$platform.$$VER $(VMREGISTRY)/kubevirt-containerdisk:$$platform ; \
+	done
+
+# Update container image versions in molecule/kubevirt/molecule.yml
+.PHONY: .updatever-vm
+.updatever-vm:
+	@for platform in $(VMPLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
+		echo kubevirt-containerdisk:$$platform.$$VER ; \
+		sed -i -e "s|kubevirt-containerdisk:$$platform..*|kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
 	done
 
 # Push KubeVirt containerDisk images
@@ -95,20 +129,20 @@ push-vm: tag-vm
 		$(CONTAINER_ENGINE) push $(VMREGISTRY)/kubevirt-containerdisk:$$platform ; \
 	done
 
-# Copy container image from Docker to Podman (temporary target while testing docker cross-platform builds)
-.PHONY: cp-container-docker-to-podman
-cp-container-docker-to-podman:
-	@for platform in $(CTPLATFORMS); do \
-		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
-		docker save molecule-platform:$$platform.$$VER | podman load ; \
-		podman tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
-	done
+# # Copy container image from Docker to Podman (temporary target while testing docker cross-platform builds)
+# .PHONY: .cp-container-docker-to-podman
+# .cp-container-docker-to-podman:
+# 	@for platform in $(CTPLATFORMS); do \
+# 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
+# 		docker save molecule-platform:$$platform.$$VER | podman load ; \
+# 		podman tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
+# 	done
 
-# Copy KubeVirt image from Docker to Podman (temporary target while testing docker cross-platform builds)
-.PHONY: cp-vm-docker-to-podman
-cp-vm-docker-to-podman:
-	@for platform in $(VMPLATFORMS); do \
-		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
-		docker save kubevirt-containerdisk:$$platform.$$VER | podman load ; \
-		podman tag kubevirt-containerdisk:$$platform.$$VER kubevirt-containerdisk:$$platform ; \
-	done
+# # Copy KubeVirt image from Docker to Podman (temporary target while testing docker cross-platform builds)
+# .PHONY: .cp-vm-docker-to-podman
+# .cp-vm-docker-to-podman:
+# 	@for platform in $(VMPLATFORMS); do \
+# 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
+# 		docker save kubevirt-containerdisk:$$platform.$$VER | podman load ; \
+# 		podman tag kubevirt-containerdisk:$$platform.$$VER kubevirt-containerdisk:$$platform ; \
+# 	done

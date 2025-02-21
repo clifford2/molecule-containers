@@ -13,40 +13,46 @@ driver:
 provisioner:
   name: ansible
   playbooks:
-    create: create.yml
+    create: ../shared/podman-create.yml
     converge: converge.yml
-    destroy: destroy.yml
+    destroy: ../shared/podman-destroy.yml
 platforms:
+  - name: molecule-ubi8
+    image: registry.access.redhat.com/ubi8/ubi-init:8.10-12.1739287323
+    command: /sbin/init
   - name: molecule-ubi9
-    image: registry.access.redhat.com/ubi9/ubi-init:9.5-1736424979
+    image: registry.access.redhat.com/ubi9/ubi-init:9.5-1739777459
+    command: /sbin/init
+  - name: molecule-ubi10
+    image: registry.access.redhat.com/ubi10-beta/ubi-init:10.0-beta-1730524900
     command: /sbin/init
   - name: molecule-centos8
-    image: molecule-platform:centos-stream8.v1.0.0
+    image: docker.io/cliffordw/molecule-platform:centos-stream8.v1.0.0
     command: /sbin/init
   - name: molecule-centos9
-    image: molecule-platform:centos-stream9.v1.0.0
+    image: docker.io/cliffordw/molecule-platform:centos-stream9.v1.0.0
     command: /sbin/init
   - name: molecule-centos10
     image: quay.io/centos/centos:stream10
     command: /sbin/init
   - name: molecule-debian12
-    image: molecule-platform:debian12.v1.0.2
+    image: docker.io/cliffordw/molecule-platform:debian12.v1.0.2
     command: /sbin/init
   - name: molecule-docker-fedora40
-    image: molecule-platform:fedora40.v1.0.0
+    image: docker.io/cliffordw/molecule-platform:fedora40.v1.0.0
     command: /sbin/init
   - name: molecule-docker-fedora41
-    image: molecule-platform:fedora41.v1.0.0
+    image: docker.io/cliffordw/molecule-platform:fedora41.v1.0.0
     command: /sbin/init
   - name: molecule-docker-fedora42
-    image: molecule-platform:fedora42.v1.0.1
+    image: docker.io/cliffordw/molecule-platform:fedora42.v1.0.1
     command: /sbin/init
   - name: molecule-sle15
-    image: molecule-platform:sle15.v1.0.2
+    image: docker.io/cliffordw/molecule-platform:sle15.v1.0.2
     command: /sbin/init
   - name: molecule-ubuntu2204
-    image: molecule-platform:ubuntu2204.v1.0.1
+    image: docker.io/cliffordw/molecule-platform:ubuntu2204.v1.0.1
     command: /sbin/init
   - name: molecule-ubuntu2404
-    image: molecule-platform:ubuntu2404.v1.0.1
+    image: docker.io/cliffordw/molecule-platform:ubuntu2404.v1.0.1
     command: /sbin/init
