@@ -10,7 +10,7 @@ dependency:
   options:
     requirements-file: ../shared/kubevirt-requirements.yml
 platforms:
-#  # Needs authentication to pull imag
+#  # Needs authentication to pull image
 #  - name: ostest-rhel9
 #    image: registry.redhat.io/rhel9/rhel-guest-image
 #    namespace: molecule
@@ -19,35 +19,35 @@ platforms:
 #    ansible_user: cloud-user
 #    memory: 1Gi
   - name: ostest-centos9
-    image: docker.io/cliffordw/kubevirt-containerdisk:centos-stream9.v20250210.0
+    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream9.v20250331.0
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
   - name: ostest-centos10
-    image: docker.io/cliffordw/kubevirt-containerdisk:centos-stream10.v20250210.0
+    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10.v20250331.0
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
-#  - name: ostest-debian12
-#    image: docker.io/cliffordw/kubevirt-containerdisk:debian12.v20250210-2019
-#    namespace: molecule
-#    ssh_service:
-#      type: NodePort
-#    ansible_user: molecule
-#    memory: 1Gi
+  - name: ostest-debian12
+    image: ghcr.io/clifford2/kubevirt-containerdisk:debian12.v20250316-2053
+    namespace: molecule
+    ssh_service:
+      type: NodePort
+    ansible_user: molecule
+    memory: 1Gi
   - name: ostest-opensuse15
-    image: docker.io/cliffordw/kubevirt-containerdisk:opensuse-15.6.v1.151
+    image: ghcr.io/clifford2/kubevirt-containerdisk:opensuse-15.6.v1.185
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
   - name: ostest-ubuntu24
-    image: docker.io/cliffordw/kubevirt-containerdisk:ubuntu2404.v20250211
+    image: ghcr.io/clifford2/kubevirt-containerdisk:ubuntu2404.v20250327
     namespace: molecule
     ssh_service:
       type: NodePort

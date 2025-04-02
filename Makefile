@@ -116,7 +116,7 @@ tag-vm: .updatever-vm
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo kubevirt-containerdisk:$$platform.$$VER ; \
-		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: $(CTREGISTRY)/kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
+		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
 	done
 
 # Push KubeVirt containerDisk images

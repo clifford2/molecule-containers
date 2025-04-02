@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG VERSION=20250210.0
+ARG VERSION=20250331.0
 FROM scratch
-ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/10-stream/x86_64/images/CentOS-Stream-GenericCloud-x86_64-10-20250210.0.x86_64.qcow2 /disk/
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/10-stream/x86_64/images/CentOS-Stream-GenericCloud-x86_64-10-20250331.0.x86_64.qcow2 /disk/

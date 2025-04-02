@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG VERSION=20250331.0
+ARG VERSION=20250316-2053
 FROM scratch
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
-ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20250331.0.x86_64.qcow2 /disk/
+ADD --chown=107:107 --chmod=0644 https://cdimage.debian.org/images/cloud/bookworm/20250316-2053/debian-12-genericcloud-amd64-20250316-2053.qcow2 /disk/
