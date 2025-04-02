@@ -4,11 +4,10 @@
 
 This repository is used for building container images for various Linux distributions, for use by Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/).
 
-Two varieties are available.
+Two varieties are available, namely:
 
-The first set of files build images for use with podman/docker platforms.
-
-The second set of files build KubeVirt containerDisk images.
+- Podman / Docker images, for testing your playbooks in [Podman](https://podman.io/) or [Docker](https://www.docker.com/) containers
+- containerDisk images, for testing your playbooks in [KubeVirt](https://kubevirt.io/) VMs
 
 ## Podman / Docker Images
 
@@ -118,9 +117,10 @@ molecule test -s kubevirt
 
 ## License & Disclaimer
 
-The original Dockerfile is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
+The original Debian systemd Dockerfile example, in which some of our images are based,
+is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
 
-Modifications, and all other files are © Clifford Weinmann <https://www.cliffordweinmann.com/>.
+Modifications, and all other files are © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>.
 
 This code is provided *AS IS*, without warranty of any kind.
 See [`LICENSES/`](LICENSES) for the full license text and disclaimers.
