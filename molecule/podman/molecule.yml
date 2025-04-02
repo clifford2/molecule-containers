@@ -31,11 +31,11 @@ platforms:
     command: /sbin/init
   # CentOS Stream 8
   - name: molecule-centos8
-    image: docker.io/cliffordw/molecule-platform:centos-stream8.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:centos-stream8.v1.0.0
     command: /sbin/init
   # CentOS Stream 9
   - name: molecule-centos9
-    image: docker.io/cliffordw/molecule-platform:centos-stream9.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.0
     command: /sbin/init
   # CentOS Stream 10
   - name: molecule-centos10
@@ -43,29 +43,29 @@ platforms:
     command: /sbin/init
   # Debian 12 (Bookworm)
   - name: molecule-debian12
-    image: docker.io/cliffordw/molecule-platform:debian12.v1.0.3
+    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.3
     command: /sbin/init
   # Fedora 40
   - name: molecule-docker-fedora40
-    image: docker.io/cliffordw/molecule-platform:fedora40.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
     command: /sbin/init
   # Fedora 41
   - name: molecule-docker-fedora41
-    image: docker.io/cliffordw/molecule-platform:fedora41.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0
     command: /sbin/init
   # Fedora 42
   - name: molecule-docker-fedora42
-    image: docker.io/cliffordw/molecule-platform:fedora42.v1.0.1
+    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.1
     command: /sbin/init
   # SLES 15
   - name: molecule-sle15
-    image: docker.io/cliffordw/molecule-platform:sle15.v1.0.3
+    image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.3
     command: /sbin/init
   # Ubuntu 22.04 LTS
   - name: molecule-ubuntu2204
-    image: docker.io/cliffordw/molecule-platform:ubuntu2204.v1.0.1
+    image: ghcr.io/clifford2/molecule-platform:ubuntu2204.v1.0.1
     command: /sbin/init
   # Ubuntu 24.04 LTS
   - name: molecule-ubuntu2404
-    image: docker.io/cliffordw/molecule-platform:ubuntu2404.v1.0.1
+    image: ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.1
     command: /sbin/init

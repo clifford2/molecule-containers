@@ -4,11 +4,11 @@
 
 # Configuration for podman/docker images
 CTPLATFORMS := centos-stream8 centos-stream9 debian12 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
-CTREGISTRY := docker.io/cliffordw
+CTREGISTRY := ghcr.io/clifford2
 
 # Configuration for KubeVirt containerDisk images
 VMPLATFORMS := centos-stream9 centos-stream10 debian12 opensuse-15.6 ubuntu2404
-VMREGISTRY := docker.io/cliffordw
+VMREGISTRY := ghcr.io/clifford2
 
 # Use podman or docker?
 # ifeq ($(shell command -v podman 2> /dev/null),)
@@ -35,8 +35,8 @@ endif
 .PHONY: all
 all: build-container build-vm
 
-.PHONY: about
-about:
+.PHONY: .envinfo
+.envinfo:
 	@echo "We're using $(CONTAINER_ENGINE) on $(BUILDARCH)"
 
 # Get current podman/docker container image versions
@@ -47,7 +47,7 @@ showver-container:
 		echo "molecule-platform:$$platform.$$VER" ; \
 	done
 
-# Build podman/docker container images
+# Build podman/docker container images (molecule-platform:$platform.$VER - no registry in name)
 .PHONY: build-container
 build-container:
 	@for platform in $(CTPLATFORMS); do \
@@ -71,7 +71,7 @@ tag-container: .updatever-container
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		echo "molecule-platform:$$platform.$$VER" ; \
-		sed -i -e "s|molecule-platform:$$platform..*|molecule-platform:$$platform.$$VER|" molecule/podman/molecule.yml ; \
+		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: $(CTREGISTRY)/molecule-platform:$$platform.$$VER|" molecule/podman/molecule.yml ; \
 	done
 
 # Push podman/docker container images
@@ -91,7 +91,7 @@ showver-vm:
 		echo kubevirt-containerdisk:$$platform.$$VER ; \
 	done
 
-# Build KubeVirt containerDisk images
+# Build KubeVirt containerDisk images (kubevirt-containerdisk:$platform.$VER - no registry in name)
 .PHONY: build-vm
 build-vm:
 	@for platform in $(VMPLATFORMS); do \
@@ -116,7 +116,7 @@ tag-vm: .updatever-vm
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo kubevirt-containerdisk:$$platform.$$VER ; \
-		sed -i -e "s|kubevirt-containerdisk:$$platform..*|kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
+		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: $(CTREGISTRY)/kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
 	done
 
 # Push KubeVirt containerDisk images
