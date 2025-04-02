@@ -8,6 +8,9 @@ ARG VERSION=1.0.0
 
 FROM quay.io/centos/centos:stream8
 
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+
 RUN  echo 'Fix repos' \
 	&& sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*.repo \
 	&& sed -i 's|#baseurl=http://mirror.centos.org|baseurl=https://vault.centos.org|g' /etc/yum.repos.d/CentOS-*.repo

@@ -9,6 +9,9 @@ ARG VERSION=1.0.3
 
 FROM docker.io/library/debian:bookworm-20250317
 
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+
 # Configure the debconf frontend.
 #
 # This image doesn't include whiptail, dialog, nor the readline perl module.

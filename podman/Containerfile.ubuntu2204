@@ -10,6 +10,9 @@ ARG VERSION=1.0.1
 # Ubuntu 22.04 LTS
 FROM docker.io/library/ubuntu:jammy-20250126
 
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+
 # Configure the debconf frontend.
 #
 # This image doesn't include whiptail, dialog, nor the readline perl module.
