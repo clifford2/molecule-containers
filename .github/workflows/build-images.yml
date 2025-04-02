@@ -6,16 +6,16 @@ name: Create and publish a container images
 on:
   push:
     # Configures this workflow to run every time a change is pushed to the branch called `main`.
-    branches: ['main']
+    # branches: ['main']
     # Pattern matched against refs/tags - see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#patterns-to-match-branches-and-tags
-    # tags:        
-    #   - '*'  # Push events to every tag not containing /
+    tags:        
+      # - '*'  # Push events to every tag not containing /
+      - 'build*'  # Effectively stop automatically triggering this
 
-# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
-  build-and-push-image:
+
+  build-container-images:
     runs-on: ubuntu-24.04
-    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
       packages: write
@@ -29,10 +29,25 @@ jobs:
       - name: Log in to the Container registry
         run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
-      # - name: Build & push container images
-      #   run: |
-      #     make build-container
-      #     make push-container
+      - name: Build & push container images
+        run: |
+          make build-container
+          make push-container
+
+  build-vm-images:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Build & push kubevirt VM images
         run: |
