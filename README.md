@@ -2,7 +2,7 @@
 
 ## About
 
-This repository is used for building container images for various Linux distributions, for use by Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/).
+This code builds container images for various Linux distributions, for use as Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/) testing platforms.
 
 Two varieties are available, namely:
 
