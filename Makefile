@@ -31,17 +31,39 @@ else
 	BUILD_CMD := $(BUILD_NOLOAD) --load
 endif
 
+.PHONY: default
+default:
+	@echo 'No default target defined - please specify what you want. Key targets:'
+	@echo ''
+	@echo 'build-container: Build podman/docker container images'
+	@echo 'build-vm:        Build KubeVirt containerDisk images'
+	@echo 'build:           Build all images'
+	@echo 'updatever:       Update versions in our sample molecule.yml files (before "git push")'
+	@echo 'push-container:  Push podman/docker container images'
+	@echo 'push-vm:         Push KubeVirt containerDisk images'
+	@echo 'showver:         Show current versions (handy for molecule.yml files)'
 
-.PHONY: all
-all: build-container build-vm
+.PHONY: build
+build: build-container build-vm
 
 .PHONY: .envinfo
 .envinfo:
 	@echo "We're using $(CONTAINER_ENGINE) on $(BUILDARCH)"
 
+# Show current Container & KubeVirt image versions
+.PHONY: showver
+showver: showver-container showver-vm
+
+# Update container image versions in molecule/*/molecule.yml
+.PHONY: updatever
+updatever: .updatever-container .updatever-vm
+
 # Get current podman/docker container image versions
 .PHONY: showver-container
 showver-container:
+	@echo ''
+	@echo 'Container image versions:'
+	@echo ''
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		echo "molecule-platform:$$platform.$$VER" ; \
@@ -83,9 +105,16 @@ push-container: tag-container
 		$(CONTAINER_ENGINE) push $(CTREGISTRY)/molecule-platform:$$platform ; \
 	done
 
+# Build & Push podman/docker container images
+.PHONY: build-push-container
+build-push-container: build-container push-container
+
 # Show current KubeVirt containerDisk image versions
 .PHONY: showver-vm
 showver-vm:
+	@echo ''
+	@echo 'KubeVirt containerDisk image versions:'
+	@echo ''
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo kubevirt-containerdisk:$$platform.$$VER ; \
@@ -128,6 +157,10 @@ push-vm: tag-vm
 		$(CONTAINER_ENGINE) push $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER ; \
 		$(CONTAINER_ENGINE) push $(VMREGISTRY)/kubevirt-containerdisk:$$platform ; \
 	done
+
+# Build & Push KubeVirt containerDisk images
+.PHONY: build-push-vm
+build-push-vm: build-vm push-vm
 
 # # Copy container image from Docker to Podman (temporary target while testing docker cross-platform builds)
 # .PHONY: .cp-container-docker-to-podman
