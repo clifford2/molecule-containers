@@ -2,13 +2,15 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-# Configuration for podman/docker images
+# Configuration for podman/docker images (molecule-platform:$platform.$VER)
 CTPLATFORMS := centos-stream8 centos-stream9 debian12 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
 CTREGISTRY := ghcr.io/clifford2
+CTMOLECULEFILE := molecule/podman/molecule.yml
 
-# Configuration for KubeVirt containerDisk images
+# Configuration for KubeVirt containerDisk images (kubevirt-containerdisk:$platform.$VER)
 VMPLATFORMS := centos-stream9 centos-stream10 debian12 opensuse-15.6 ubuntu2404
 VMREGISTRY := ghcr.io/clifford2
+VMMOLECULEFILE := molecule/kubevirt/molecule.yml
 
 # Use podman or docker?
 # ifeq ($(shell command -v podman 2> /dev/null),)
@@ -56,7 +58,7 @@ showver: showver-container showver-vm
 
 # Update container image versions in molecule/*/molecule.yml
 .PHONY: updatever
-updatever: .updatever-container .updatever-vm
+updatever: updatever-container updatever-vm
 
 # Get current podman/docker container image versions
 .PHONY: showver-container
@@ -80,7 +82,7 @@ build-container:
 
 # Tag podman/docker container images
 .PHONY: tag-container
-tag-container: .updatever-container
+tag-container: updatever-container
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER $(CTREGISTRY)/molecule-platform:$$platform.$$VER ; \
@@ -88,12 +90,12 @@ tag-container: .updatever-container
 	done
 
 # Update container image versions in molecule/podman/molecule.yml
-.PHONY: .updatever-container
-.updatever-container:
+.PHONY: updatever-container
+updatever-container:
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		echo "molecule-platform:$$platform.$$VER" ; \
-		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: $(CTREGISTRY)/molecule-platform:$$platform.$$VER|" molecule/podman/molecule.yml ; \
+		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: $(CTREGISTRY)/molecule-platform:$$platform.$$VER|" $(CTMOLECULEFILE) ; \
 	done
 
 # Push podman/docker container images
@@ -131,7 +133,7 @@ build-vm:
 
 # Tag KubeVirt containerDisk images
 .PHONY: tag-vm
-tag-vm: .updatever-vm
+tag-vm: updatever-vm
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER ; \
@@ -140,12 +142,12 @@ tag-vm: .updatever-vm
 	done
 
 # Update container image versions in molecule/kubevirt/molecule.yml
-.PHONY: .updatever-vm
-.updatever-vm:
+.PHONY: updatever-vm
+updatever-vm:
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
 		echo kubevirt-containerdisk:$$platform.$$VER ; \
-		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER|" molecule/kubevirt/molecule.yml ; \
+		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: $(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER|" $(VMMOLECULEFILE) ; \
 	done
 
 # Push KubeVirt containerDisk images
