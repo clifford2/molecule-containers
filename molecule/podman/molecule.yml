@@ -35,7 +35,7 @@ platforms:
     command: /sbin/init
   # CentOS Stream 9
   - name: molecule-centos9
-    image: ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.1
     command: /sbin/init
   # CentOS Stream 10
   - name: molecule-centos10
@@ -46,16 +46,16 @@ platforms:
     image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.3
     command: /sbin/init
   # Fedora 40
-  - name: molecule-docker-fedora40
+  - name: molecule-fedora40
     image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
     command: /sbin/init
   # Fedora 41
-  - name: molecule-docker-fedora41
+  - name: molecule-fedora41
     image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0
     command: /sbin/init
   # Fedora 42
-  - name: molecule-docker-fedora42
-    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.1
+  - name: molecule-fedora42
+    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.2
     command: /sbin/init
   # SLES 15
   - name: molecule-sle15

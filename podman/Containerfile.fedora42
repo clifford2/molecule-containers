@@ -4,7 +4,7 @@
 
 # Based on UBI 9 Dockerfile
 
-ARG VERSION=1.0.1
+ARG VERSION=1.0.2
 
 FROM quay.io/fedora/fedora:42
 
@@ -13,7 +13,7 @@ LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-cont
 
 RUN dnf -y install systemd procps-ng python3.12 python3-dnf python3-libdnf5 && dnf clean all
 
-#mask systemd-machine-id-commit.service - partial fix for https://bugzilla.redhat.com/show_bug.cgi?id=1472439
+# mask systemd-machine-id-commit.service - partial fix for https://bugzilla.redhat.com/show_bug.cgi?id=1472439
 RUN systemctl mask systemd-remount-fs.service dev-hugepages.mount sys-fs-fuse-connections.mount systemd-logind.service getty.target console-getty.service systemd-udev-trigger.service systemd-udevd.service systemd-random-seed.service systemd-machine-id-commit.service
 
 CMD ["/sbin/init"]
