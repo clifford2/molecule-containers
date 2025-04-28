@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push kubevirt VM images
         run: |
-          VMPLATFORMS=debian12 make build-push-vm
+          make build-push-vm VMPLATFORMS=debian12

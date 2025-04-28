@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push container images
         run: |
-          CTPLATFORMS=sle15 make build-push-container
+          make build-push-container CTPLATFORMS=sle15

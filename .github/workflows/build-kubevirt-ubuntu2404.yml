@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push kubevirt VM images
         run: |
-          VMPLATFORMS=ubuntu2404 make build-push-vm
+          make build-push-vm VMPLATFORMS=ubuntu2404

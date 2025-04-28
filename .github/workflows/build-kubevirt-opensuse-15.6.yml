@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push kubevirt VM images
         run: |
-          VMPLATFORMS=opensuse-15.6 make build-push-vm
+          make build-push-vm VMPLATFORMS=opensuse-15.6

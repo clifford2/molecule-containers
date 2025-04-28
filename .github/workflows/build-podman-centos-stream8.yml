@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push container images
         run: |
-          CTPLATFORMS=centos-stream8 make build-push-container
+          make build-push-container CTPLATFORMS=centos-stream8

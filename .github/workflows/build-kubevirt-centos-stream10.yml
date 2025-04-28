@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push kubevirt VM images
         run: |
-          VMPLATFORMS=centos-stream10 make build-push-vm
+          make build-push-vm VMPLATFORMS=centos-stream10
