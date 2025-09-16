@@ -86,7 +86,9 @@ Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
 ### Build Instructions
 
-To build container images from this source, you can build all images with:
+Container images built from these files are available at <https://ghcr.io/clifford2/kubevirt-containerdisk>.
+
+To build your own images from this source, you can build all images with:
 
 ```sh
 make build-vm
