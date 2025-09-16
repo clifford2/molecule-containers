@@ -7,20 +7,21 @@ driver:
   name: default
   options:
     managed: false
-    login_cmd_template: "podman exec -ti {instance} bash"
+    login_cmd_template: "docker exec -ti {instance} bash"
     ansible_connection_options:
-      ansible_connection: podman
+      ansible_connection: docker
 provisioner:
   name: ansible
   playbooks:
-    create: ../shared/podman-create.yml
+    create: ../shared/docker-create.yml
     converge: converge.yml
-    destroy: ../shared/podman-destroy.yml
+    destroy: ../shared/docker-destroy.yml
 platforms:
-  # Red Hat Universal Base Image 8
-  - name: molecule-example-ubi8
-    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1756225952
-    command: /sbin/init
+#  # Red Hat Universal Base Image 8
+#  # /usr/bin/python3: No such file or directory
+#  - name: molecule-example-ubi8
+#    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1756225952
+#    command: /sbin/init
   # Red Hat Universal Base Image 9
   - name: molecule-example-ubi9
     image: registry.access.redhat.com/ubi9/ubi-init:9.6-1756999027
@@ -41,18 +42,18 @@ platforms:
   - name: molecule-example-centos10
     image: quay.io/centos/centos:stream10
     command: /sbin/init
-  # Debian 12 (Bookworm)
-  - name: molecule-example-debian12
-    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.4
-    command: /sbin/init
-  # Debian 13 (Trixie)
-  - name: molecule-example-debian13
-    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.0
-    command: /sbin/init
-  # Fedora 40
-  - name: molecule-example-fedora40
-    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
-    command: /sbin/init
+#  # Debian 12 (Bookworm)
+#  - name: molecule-example-debian12
+#    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.4
+#    command: /sbin/init
+#  # Debian 13 (Trixie)
+#  - name: molecule-example-debian13
+#    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.0
+#    command: /sbin/init
+#  # Fedora 40
+#  - name: molecule-example-fedora40
+#    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
+#    command: /sbin/init
   # Fedora 41
   - name: molecule-example-fedora41
     image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0
@@ -65,11 +66,11 @@ platforms:
   - name: molecule-example-sle15
     image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.4
     command: /sbin/init
-  # Ubuntu 22.04 LTS
-  - name: molecule-example-ubuntu2204
-    image: ghcr.io/clifford2/molecule-platform:ubuntu2204.v1.0.2
-    command: /sbin/init
-  # Ubuntu 24.04 LTS
-  - name: molecule-example-ubuntu2404
-    image: ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.2
-    command: /sbin/init
+#  # Ubuntu 22.04 LTS
+#  - name: molecule-example-ubuntu2204
+#    image: ghcr.io/clifford2/molecule-platform:ubuntu2204.v1.0.2
+#    command: /sbin/init
+#  # Ubuntu 24.04 LTS
+#  - name: molecule-example-ubuntu2404
+#    image: ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.2
+#    command: /sbin/init

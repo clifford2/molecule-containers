@@ -7,13 +7,13 @@
   ansible.builtin.command:
     cmd: >-
       {% raw %}
-      podman logs
+      docker logs
       {% endraw %}
-      {{ item.stdout_lines[0] }}
-    # podman inspect --format='{{.HostConfig.LogConfig.Path}}'
+      {{ item.invocation.module_args.name }}
   changed_when: false
+  failed_when: false
   register: molecule_logfile_cmd
 
 - name: "Display container log"
   ansible.builtin.fail:
-    msg: "{{ molecule_logfile_cmd.stderr }}"
+    msg: "{{ molecule_logfile_cmd.stderr | default('No logs', true) }}"

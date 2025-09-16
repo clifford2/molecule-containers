@@ -6,10 +6,17 @@ This code builds container images for various Linux distributions, for use as An
 
 Two varieties are available, namely:
 
-- Podman / Docker images, for testing your playbooks in [Podman](https://podman.io/) or [Docker](https://www.docker.com/) containers
+- Container images, for testing your playbooks in [Podman](https://podman.io/) containers
 - containerDisk images, for testing your playbooks in [KubeVirt](https://kubevirt.io/) VMs
 
-## Podman / Docker Images
+## Container Images
+
+These images were developed and tested with [Podman](https://podman.io/).
+Example code is available in the [`podman`](molecule/podman) Molecule scenario.
+
+Although a Molecule scenario also exists for [Docker](https://www.docker.com/)
+containers (see [`docker`](molecule/docker)), this doesn't cover all images
+(notably Debian based images), and has not been tested thoroughly.
 
 ### Containerfiles
 
@@ -60,7 +67,7 @@ podman build -f podman/Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 
 Other images that already contain systemd:
 
 - `registry.access.redhat.com/ubi9/ubi-init:9.6`
-- `registry.access.redhat.com/ubi9/ubi-init:10.0`
+- `registry.access.redhat.com/ubi10/ubi-init:10.0`
 - [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
 ### Molecule Example

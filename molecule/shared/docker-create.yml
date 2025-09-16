@@ -16,31 +16,31 @@
 
   tasks:
     - name: "Create a container"
-      containers.podman.podman_container:
+      community.docker.docker_container:
         name: "{{ item.name }}"
         image: "{{ item.image }}"
-        privileged: "{{ item.privileged | default(omit) }}"
-        volumes: "{{ item.volumes | default(omit) }}"
+        privileged: true
+        cgroupns_mode: "host"
         capabilities: "{{ item.capabilities | default(omit) }}"
-        systemd: "{{ item.systemd | default(omit) }}"
         state: "started"
-        command: "{{ item.command | default('sleep 1d') }}"
-        # bash -c "while true; do sleep 10000; done"
+        # command: "{{ item.command | default('sleep 1d') }}"
+        command: "/sbin/init"
         log_driver: "json-file"
-      register: molecule_podman_container_result
+        detach: true
+      register: molecule_docker_container_result
       loop: "{{ molecule_yml.platforms }}"
 
     - name: "Print some info"
       ansible.builtin.debug:
-        msg: "{{ molecule_podman_container_result.results }}"
+        msg: "{{ molecule_docker_container_result.results }}"
 
     - name: "Fail if container is not running"
       when: >
         item.container.State.ExitCode != 0 or
         not item.container.State.Running
       ansible.builtin.include_tasks:
-        file: "podman-create-fail.yml"
-      loop: "{{ molecule_podman_container_result.results }}"
+        file: "docker-create-fail.yml"
+      loop: "{{ molecule_docker_container_result.results }}"
       loop_control:
         label: "{{ item.container.Name }}"
 
@@ -52,9 +52,7 @@
               molecule:
                 hosts:
                   "{{ item.name }}":
-                    ansible_connection: containers.podman.podman
-                    become_method: containers.podman.podman_unshare
-                    ansible_user: root
+                    ansible_connection: community.docker.docker
       ansible.builtin.set_fact:
         molecule_inventory: >
           {{ molecule_inventory | combine(inventory_partial_yaml | from_yaml, recursive=true) }}
@@ -87,16 +85,16 @@
 
     - name: "Check uname"
       ansible.builtin.raw: "uname -a"
-      register: molecule_podman_uname_result
+      register: molecule_docker_uname_result
       changed_when: false
 
     - name: "Read /etc/os-release"
       ansible.builtin.slurp:
         path: "/etc/os-release"
-      register: molecule_podman_osfile
+      register: molecule_docker_osfile
 
     - name: "Show OS information"
       ansible.builtin.debug:
         msg:
-          - "uname -a: {{ molecule_podman_uname_result.stdout }}"
-          - "PRETTY_NAME: {{ molecule_podman_osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"
+          - "uname -a: {{ molecule_docker_uname_result.stdout }}"
+          - "PRETTY_NAME: {{ molecule_docker_osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"

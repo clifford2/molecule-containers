@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: MIT-0
 
 ---
-- name: Include ostest playbook
-  ansible.builtin.import_playbook: ../shared/ostest.yml
+- name: "Include ostest playbook"
+  ansible.builtin.import_playbook: "../shared/ostest.yml"
