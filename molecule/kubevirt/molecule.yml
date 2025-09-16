@@ -19,28 +19,28 @@ platforms:
 #    ansible_user: cloud-user
 #    memory: 1Gi
   - name: ostest-centos9
-    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream9.v20250331.0
+    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream9.v20250915.0
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
   - name: ostest-centos10
-    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10.v20250331.0
+    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10.v20250915.0
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
   - name: ostest-debian12
-    image: ghcr.io/clifford2/kubevirt-containerdisk:debian12.v20250316-2053
+    image: ghcr.io/clifford2/kubevirt-containerdisk:debian12.v20250909-2230
     namespace: molecule
     ssh_service:
       type: NodePort
     ansible_user: molecule
     memory: 1Gi
   - name: ostest-opensuse15
-    image: ghcr.io/clifford2/kubevirt-containerdisk:opensuse-15.6.v1.185
+    image: ghcr.io/clifford2/kubevirt-containerdisk:opensuse-15.6.v1.0.2-1.31
     namespace: molecule
     ssh_service:
       type: NodePort

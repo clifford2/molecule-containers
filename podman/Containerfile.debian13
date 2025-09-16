@@ -5,9 +5,9 @@
 
 # Based on original code from <https://github.com/alehaa/docker-debian-systemd>.
 
-ARG VERSION=1.0.4
+ARG VERSION=1.0.0
 
-FROM docker.io/library/debian:bookworm-20250908
+FROM docker.io/library/debian:trixie-20250908
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers

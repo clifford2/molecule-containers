@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+# SPDX-License-Identifier: MIT-0
+
+name: Create and publish a container images
+
+on:
+  push:
+    # Configures this workflow to run every time a change is pushed to the branch called `main`.
+    branches: ['main']
+    # Pattern matched specific path
+    paths:
+      - 'podman/Containerfile.debian13'
+
+jobs:
+
+  build-container-images:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Build & push container images
+        run: |
+          make build-push-container CTPLATFORMS=debian13

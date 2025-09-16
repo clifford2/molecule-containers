@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+#
+# SPDX-License-Identifier: MIT-0
+
+---
+- name: 'Verify'
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: 'Dummy verify task'
+      ansible.builtin.assert:
+        that: true
+        fail_msg: "Oops, looks like our converge step didn't achieve it's goals"
+        success_msg: "Well done, it worked!"

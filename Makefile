@@ -3,12 +3,12 @@
 # SPDX-License-Identifier: MIT-0
 
 # Configuration for podman/docker images (molecule-platform:$platform.$VER)
-CTPLATFORMS := centos-stream8 centos-stream9 debian12 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
+CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
 CTREGISTRY := ghcr.io/clifford2
 CTMOLECULEFILE := molecule/podman/molecule.yml
 
 # Configuration for KubeVirt containerDisk images (kubevirt-containerdisk:$platform.$VER)
-VMPLATFORMS := centos-stream9 centos-stream10 debian12 opensuse-15.6 ubuntu2404
+VMPLATFORMS := centos-stream9 centos-stream10 debian12 debian13 opensuse-15.6 ubuntu2404
 VMREGISTRY := ghcr.io/clifford2
 VMMOLECULEFILE := molecule/kubevirt/molecule.yml
 
@@ -25,7 +25,7 @@ CONTAINER_ENGINE := podman
 # Decide on container engine to use
 ifeq ($(CONTAINER_ENGINE),podman)
 	BUILDARCH := $(shell podman version --format '{{.Client.OsArch}}' | cut -d/ -f2)
-	BUILD_NOLOAD := podman build --platform linux/amd64
+	BUILD_NOLOAD := podman build --pull=newer --platform linux/amd64
 	BUILD_CMD := $(BUILD_NOLOAD)
 else
 	BUILDARCH := $(shell docker version --format '{{.Client.Arch}}')
