@@ -32,7 +32,7 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 
 ### Build Instructions
 
-Container images built from these files are available at <https://hub.docker.com/r/cliffordw/molecule-platform>.
+Container images built from these files are available at <https://ghcr.io/clifford2/molecule-platform>.
 
 To build your own images from this source, you can build all images with:
 
@@ -86,9 +86,7 @@ Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
 ### Build Instructions
 
-Container images built from these files are available at <https://hub.docker.com/r/cliffordw/kubevirt-containerdisk>.
-
-To build your own images from this source, you can build all images with:
+To build container images from this source, you can build all images with:
 
 ```sh
 make build-vm
