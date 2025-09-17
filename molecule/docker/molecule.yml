@@ -9,7 +9,11 @@ driver:
     managed: false
     login_cmd_template: "docker exec -ti {instance} bash"
     ansible_connection_options:
-      ansible_connection: docker
+      ansible_connection: community.docker.docker
+dependency:
+  name: galaxy
+  options:
+    requirements-file: molecule/docker/collections.yml
 provisioner:
   name: ansible
   playbooks:

@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 #
 # SPDX-License-Identifier: MIT-0
+#
+# Example: https://ansible.readthedocs.io/projects/molecule/examples/podman/
 
 ---
 - name: "Create"

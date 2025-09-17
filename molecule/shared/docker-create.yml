@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 #
 # SPDX-License-Identifier: MIT-0
+#
+# Example: https://ansible.readthedocs.io/projects/molecule/examples/docker/
 
 ---
 - name: "Create"
@@ -15,6 +17,8 @@
             hosts: {}
 
   tasks:
+
+    # https://github.com/antmelekhin/docker-systemd
     - name: "Create a container"
       community.docker.docker_container:
         name: "{{ item.name }}"
