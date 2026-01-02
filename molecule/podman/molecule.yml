@@ -55,19 +55,19 @@ platforms:
     command: /sbin/init
   # Fedora 40
   - name: molecule-example-fedora40
-    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0-20260102
     command: /sbin/init
   # Fedora 41
   - name: molecule-example-fedora41
-    image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0-20260102
     command: /sbin/init
   # Fedora 42
   - name: molecule-example-fedora42
-    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.2
+    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.2-20260102
     command: /sbin/init
   # Fedora 43
   - name: molecule-example-fedora43
-    image: ghcr.io/clifford2/molecule-platform:fedora43.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora43.v1.0.0-20260102
     command: /sbin/init
   # SLES 15
   - name: molecule-example-sle15
