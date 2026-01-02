@@ -5,12 +5,12 @@
 
 # Based on original code from <https://github.com/alehaa/docker-debian-systemd>.
 
-ARG VERSION=1.0.4
+ARG VERSION=1.0.5
 
-FROM docker.io/library/debian:bookworm-20250908
+FROM docker.io/library/debian:bookworm-20251229
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
 
 # Configure the debconf frontend.
 #

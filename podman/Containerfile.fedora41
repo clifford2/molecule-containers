@@ -9,7 +9,7 @@ ARG VERSION=1.0.0
 FROM quay.io/fedora/fedora:41
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
 
 RUN dnf -y install systemd procps-ng python3.12 python3-dnf && dnf clean all
 

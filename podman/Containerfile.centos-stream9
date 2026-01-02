@@ -4,12 +4,12 @@
 
 # Based on UBI 9 Dockerfile
 
-ARG VERSION=1.0.1
+ARG VERSION=1.0.1-20251224
 
 FROM quay.io/centos/centos:stream9
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
 
 RUN dnf -y install systemd procps-ng && dnf clean all
 

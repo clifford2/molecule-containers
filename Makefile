@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT-0
 
 # Configuration for podman/docker images (molecule-platform:$platform.$VER)
-CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 sle15 ubuntu2204 ubuntu2404
+CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 sle15 sle16 ubuntu2204 ubuntu2404
 CTREGISTRY := ghcr.io/clifford2
 CTMOLECULEFILE := molecule/podman/molecule.yml
 
@@ -33,8 +33,8 @@ else
 	BUILD_CMD := $(BUILD_NOLOAD) --load
 endif
 
-.PHONY: default
-default:
+.PHONY: help
+help:
 	@echo 'No default target defined - please specify what you want. Key targets:'
 	@echo ''
 	@echo 'build-container: Build podman/docker container images'
@@ -74,7 +74,7 @@ showver-container:
 build-container:
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
-		$(BUILD_CMD) -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . ; \
+		$(BUILD_CMD) -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . && \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
 	done
 

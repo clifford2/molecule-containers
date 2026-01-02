@@ -65,7 +65,7 @@ platforms:
     ansible_user: molecule
     memory: 1Gi
   - name: molecule-ostest-debian13
-    image: ghcr.io/clifford2/kubevirt-containerdisk:debian13.20250911-22320
+    image: ghcr.io/clifford2/kubevirt-containerdisk:debian13.v20250911-2232
     namespace: molecule
     ssh_service:
       type: NodePort
