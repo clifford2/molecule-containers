@@ -2,8 +2,22 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG VERSION=20250327
+ARG BUILD_TIME
+ARG GIT_REVISION
+
 FROM scratch
+
+# Obtain latest image from https://cloud-images.ubuntu.com/noble/
+ARG VERSION=20251213
+ADD --chown=107:107 --chmod=0644 https://cloud-images.ubuntu.com/noble/${VERSION}/noble-server-cloudimg-amd64.img /disk/
+
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
-ADD --chown=107:107 --chmod=0644 https://cloud-images.ubuntu.com/noble/20250327/noble-server-cloudimg-amd64.img /disk/
+LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.created="${BUILD_TIME}"
+LABEL org.opencontainers.image.description="Ansible Molecule KubeVirt containerDisk Image for Ubuntu 24.04"
+LABEL org.opencontainers.image.licenses="MIT-0"
+LABEL org.opencontainers.image.revision="${GIT_REVISION}"
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.title="kubevirt-containerdisk:ubuntu2404"
+LABEL org.opencontainers.image.url="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.version="${VERSION}"

@@ -2,8 +2,22 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG VERSION=20250909-2230
+ARG BUILD_TIME
+ARG GIT_REVISION
+
 FROM scratch
+
+# Obtain latest image file from https://cdimage.debian.org/images/cloud/bookworm/
+ARG VERSION=20251112-2294
+ADD --chown=107:107 --chmod=0644 https://cdimage.debian.org/images/cloud/bookworm/${VERSION}/debian-12-genericcloud-amd64-${VERSION}.qcow2 /disk/
+
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source https://github.com/clifford2/molecule-containers
-ADD --chown=107:107 --chmod=0644 https://cdimage.debian.org/images/cloud/bookworm/20250909-2230/debian-12-genericcloud-amd64-20250909-2230.qcow2 /disk/
+LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.created="${BUILD_TIME}"
+LABEL org.opencontainers.image.description="Ansible Molecule KubeVirt containerDisk Image for Debian 12 (Bookworm)"
+LABEL org.opencontainers.image.licenses="MIT-0"
+LABEL org.opencontainers.image.revision="${GIT_REVISION}"
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.title="kubevirt-containerdisk:debian12"
+LABEL org.opencontainers.image.url="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.version="${VERSION}"
