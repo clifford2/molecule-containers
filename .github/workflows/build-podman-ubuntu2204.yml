@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push container images
         run: |
-          make build-push-container CTPLATFORMS=ubuntu2204
+          make .build-push-container CTPLATFORMS=ubuntu2204

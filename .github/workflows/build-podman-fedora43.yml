@@ -9,7 +9,7 @@ on:
     branches: ['main']
     # Pattern matched specific path
     paths:
-      - 'podman/Containerfile.debian12'
+      - 'podman/Containerfile.fedora43'
 
 jobs:
 
@@ -30,4 +30,4 @@ jobs:
 
       - name: Build & push container images
         run: |
-          make .build-push-container CTPLATFORMS=debian12
+          make .build-push-container CTPLATFORMS=fedora43

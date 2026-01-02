@@ -5,6 +5,8 @@
 
 # Based on original code from <https://github.com/alehaa/docker-debian-systemd>.
 
+ARG BUILD_TIME
+ARG GIT_REVISION
 ARG VERSION=1.0.3
 
 # Ubuntu 24.04 LTS
@@ -94,3 +96,14 @@ VOLUME [ "/sys/fs/cgroup", "/run", "/run/lock", "/tmp" ]
 # the init system. CMD will be preferred in favor of ENTRYPOINT, so one may
 # override it when creating the container to e.g. to run a bash console instead.
 CMD [ "/sbin/init" ]
+
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.created="${BUILD_TIME}"
+LABEL org.opencontainers.image.description="Ansible Molecule Container Image for Ubuntu 24.04 (Noble Numbat)"
+LABEL org.opencontainers.image.licenses="MIT-0"
+LABEL org.opencontainers.image.revision="${GIT_REVISION}"
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.title="molecule-platform:ubuntu2404"
+LABEL org.opencontainers.image.url="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.version="${VERSION}"

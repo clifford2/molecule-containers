@@ -4,12 +4,15 @@
 
 # Based on UBI 9 Dockerfile
 
-ARG VERSION=1.0.2
+ARG BUILD_TIME
+ARG GIT_REVISION
+
+# Base image is not immutable
+# Semver version number is changed when config changes;
+# Date suffix is changed to trigger new build, and is based on build date of most recent image at the time
+ARG VERSION=1.0.2-20260102
 
 FROM quay.io/fedora/fedora:42
-
-LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
-LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
 
 RUN dnf -y install systemd procps-ng python3.12 python3-dnf python3-libdnf5 && dnf clean all
 
@@ -19,3 +22,14 @@ RUN systemctl mask systemd-remount-fs.service dev-hugepages.mount sys-fs-fuse-co
 CMD ["/sbin/init"]
 
 STOPSIGNAL SIGRTMIN+3
+
+LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
+LABEL org.opencontainers.image.created="${BUILD_TIME}"
+LABEL org.opencontainers.image.description="Ansible Molecule Container Image for Fedora 42"
+LABEL org.opencontainers.image.licenses="MIT-0"
+LABEL org.opencontainers.image.revision="${GIT_REVISION}"
+LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.title="molecule-platform:fedora42"
+LABEL org.opencontainers.image.url="https://github.com/clifford2/molecule-containers"
+LABEL org.opencontainers.image.version="${VERSION}"

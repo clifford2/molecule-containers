@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+= SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 #
 # SPDX-License-Identifier: MIT-0
 
@@ -12,11 +12,11 @@ ARG GIT_REVISION
 # Date suffix is changed to trigger new build, and is based on build date of most recent image at the time
 ARG VERSION=1.0.0-20260102
 
-FROM quay.io/fedora/fedora:41
+FROM quay.io/fedora/fedora:43
 
-RUN dnf -y install systemd procps-ng python3.12 python3-dnf && dnf clean all
+RUN dnf -y install systemd procps-ng python3.12 python3-dnf python3-libdnf5 && dnf clean all
 
-#mask systemd-machine-id-commit.service - partial fix for https://bugzilla.redhat.com/show_bug.cgi?id=1472439
+# mask systemd-machine-id-commit.service - partial fix for https://bugzilla.redhat.com/show_bug.cgi?id=1472439
 RUN systemctl mask systemd-remount-fs.service dev-hugepages.mount sys-fs-fuse-connections.mount systemd-logind.service getty.target console-getty.service systemd-udev-trigger.service systemd-udevd.service systemd-random-seed.service systemd-machine-id-commit.service
 
 CMD ["/sbin/init"]
@@ -26,10 +26,10 @@ STOPSIGNAL SIGRTMIN+3
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.created="${BUILD_TIME}"
-LABEL org.opencontainers.image.description="Ansible Molecule Container Image for Fedora 41"
+LABEL org.opencontainers.image.description="Ansible Molecule Container Image for Fedora 43"
 LABEL org.opencontainers.image.licenses="MIT-0"
 LABEL org.opencontainers.image.revision="${GIT_REVISION}"
 LABEL org.opencontainers.image.source="https://github.com/clifford2/molecule-containers"
-LABEL org.opencontainers.image.title="molecule-platform:fedora41"
+LABEL org.opencontainers.image.title="molecule-platform:fedora43"
 LABEL org.opencontainers.image.url="https://github.com/clifford2/molecule-containers"
 LABEL org.opencontainers.image.version="${VERSION}"

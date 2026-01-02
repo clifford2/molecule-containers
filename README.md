@@ -31,7 +31,9 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 | Fedora 40                      | [`Containerfile.fedora40`](podman/Containerfile.fedora40)             | molecule-platform:fedora40   |
 | Fedora 41                      | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41   |
 | Fedora 42                      | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42   |
+| Fedora 43                      | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43   |
 | SLE BCI (SLES 15) based        | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15      |
+| SLE BCI (SLES 16) based        | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16      |
 | Ubuntu 22.04 (Jammy Jellyfish) | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
 | Ubuntu 24.04 (Noble Numbat)    | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
 
@@ -57,7 +59,9 @@ podman build -f podman/Containerfile.debian13 -t molecule-platform:debian13 .
 podman build --pull -f podman/Containerfile.fedora40 -t molecule-platform:fedora40 .
 podman build --pull -f podman/Containerfile.fedora41 -t molecule-platform:fedora41 .
 podman build --pull -f podman/Containerfile.fedora42 -t molecule-platform:fedora42 .
+podman build --pull -f podman/Containerfile.fedora43 -t molecule-platform:fedora43 .
 podman build -f podman/Containerfile.sle15 -t molecule-platform:sle15 .
+podman build -f podman/Containerfile.sle16 -t molecule-platform:sle16 .
 podman build -f podman/Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
 podman build -f podman/Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
 ```

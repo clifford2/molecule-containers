@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT-0
 
 # Configuration for podman/docker images (molecule-platform:$platform.$VER)
-CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 sle15 sle16 ubuntu2204 ubuntu2404
+CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 fedora43 sle15 sle16 ubuntu2204 ubuntu2404
 CTREGISTRY := ghcr.io/clifford2
 CTMOLECULEFILE := molecule/podman/molecule.yml
 
@@ -21,6 +21,9 @@ VMMOLECULEFILE := molecule/kubevirt/molecule.yml
 #
 # Forcing use of podman, as docker code is experimental multi-arch, and not working yet
 CONTAINER_ENGINE := podman
+
+BUILD_TIME := $(shell TZ=UTC date '+%Y-%m-%dT%H:%M:%SZ')
+GIT_REVISION := $(shell git rev-parse @)
 
 # Decide on container engine to use
 ifeq ($(CONTAINER_ENGINE),podman)
@@ -74,7 +77,7 @@ showver-container:
 build-container:
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
-		$(BUILD_CMD) -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . && \
+		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . && \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
 	done
 
@@ -125,7 +128,7 @@ showver-vm:
 build-vm:
 	@for platform in $(VMPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' kubevirt/Containerfile.$$platform) ; \
-		$(BUILD_CMD) -f kubevirt/Containerfile.$$platform -t kubevirt-containerdisk:$$platform.$$VER . ; \
+		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f kubevirt/Containerfile.$$platform -t kubevirt-containerdisk:$$platform.$$VER . ; \
 		$(CONTAINER_ENGINE) tag kubevirt-containerdisk:$$platform.$$VER kubevirt-containerdisk:$$platform ; \
 	done
 
