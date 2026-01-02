@@ -9,7 +9,7 @@ FROM scratch
 
 # Get latest version from https://cloud.centos.org/centos/9-stream/x86_64/images/
 ARG VERSION=20251223.0
-ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20250915.0.x86_64.qcow2 /disk/
+ADD --chown=107:107 --chmod=0644 https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-${VERSION}.x86_64.qcow2 /disk/
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
