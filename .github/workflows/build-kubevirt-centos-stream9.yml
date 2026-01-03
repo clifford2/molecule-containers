@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 # SPDX-License-Identifier: MIT-0
 
-name: "Create & publish CentOS Stream 9 container image"
+name: "Create & publish CentOS Stream 9 KubeVirt containerDisk image"
 
 on:
   push:
