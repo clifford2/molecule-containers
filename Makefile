@@ -165,6 +165,10 @@ updatever-vm:
 .PHONY: .build-push-vm
 .build-push-vm: build-vm .push-vm
 
+.PHONY: yamllint
+yamllint:
+	find . -type f \( -name "*.yaml" -o -name "*.yml" \) -print | xargs yamllint
+
 # # Copy container image from Docker to Podman (temporary target while testing docker cross-platform builds)
 # .PHONY: .cp-container-docker-to-podman
 # .cp-container-docker-to-podman:

@@ -1,9 +1,10 @@
+---
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 # SPDX-License-Identifier: MIT-0
 
 name: "Create & publish openSUE 15.6 KubeVirt containerDisk image"
 
-on:
+"on":
   push:
     # Configures this workflow to run every time a change is pushed to the branch called `main`.
     branches: ['main']
