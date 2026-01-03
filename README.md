@@ -145,10 +145,10 @@ molecule test -s kubevirt
 
 ## License & Disclaimer
 
-The original Debian systemd Dockerfile example, in which some of our images are based,
-is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
+Our Debian & Ubuntu Containerfiles are based on <https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile>,
+which is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
 
-Modifications, and all other files are © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>.
+Modifications based on that file, and all other files, are © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>.
 
 This code is provided *AS IS*, without warranty of any kind.
 See [`LICENSES/`](LICENSES) for the full license text and disclaimers.
