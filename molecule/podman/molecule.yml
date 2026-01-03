@@ -23,15 +23,15 @@ provisioner:
 platforms:
   # Red Hat Universal Base Image 8
   - name: molecule-example-ubi8
-    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1756225952
+    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1766364179
     command: /sbin/init
   # Red Hat Universal Base Image 9
   - name: molecule-example-ubi9
-    image: registry.access.redhat.com/ubi9/ubi-init:9.6-1756999027
+    image: registry.access.redhat.com/ubi9/ubi-init:9.7-1766406466
     command: /sbin/init
   # Red Hat Universal Base Image 10
   - name: molecule-example-ubi10
-    image: registry.access.redhat.com/ubi10/ubi-init:10.0-1755764354
+    image: registry.access.redhat.com/ubi10/ubi-init:10.1-1763368398
     command: /sbin/init
   # CentOS Stream 8
   - name: molecule-example-centos8
