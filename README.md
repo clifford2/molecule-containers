@@ -73,7 +73,7 @@ The following images already contain systemd, and can be used as is in molecule 
 
 - RHEL 9 UBI: `registry.access.redhat.com/ubi9/ubi-init:9.6`
 - RHEL 10 UBI: `registry.access.redhat.com/ubi10/ubi-init:10.0`
-- CentOS Stream 10 [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
+- CentOS Stream 10: [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
 ### Molecule Example
 
