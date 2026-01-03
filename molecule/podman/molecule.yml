@@ -4,22 +4,22 @@
 
 ---
 driver:
-  name: default
+  name: "default"
   options:
     managed: false
     login_cmd_template: "podman exec -ti {instance} bash"
     ansible_connection_options:
-      ansible_connection: containers.podman.podman
+      ansible_connection: "containers.podman.podman"
 dependency:
-  name: galaxy
+  name: "galaxy"
   options:
-    requirements-file: molecule/podman/collections.yml
+    requirements-file: "molecule/podman/collections.yml"
 provisioner:
-  name: ansible
+  name: "ansible"
   playbooks:
-    create: ../shared/podman-create.yml
-    converge: converge.yml
-    destroy: ../shared/podman-destroy.yml
+    create: "../shared/podman-create.yml"
+    converge: "converge.yml"
+    destroy: "../shared/podman-destroy.yml"
 platforms:
   # Red Hat Universal Base Image 8
   - name: molecule-example-ubi8

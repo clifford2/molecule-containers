@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-# Based on UBI 9 Dockerfile
+# Use [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10) instead
 
 ARG BUILD_TIME
 ARG GIT_REVISION

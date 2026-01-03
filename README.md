@@ -11,7 +11,7 @@ Two varieties are available, namely:
 
 ## Container Images
 
-These images were developed and tested with [Podman](https://podman.io/).
+These container images were developed and tested with [Podman](https://podman.io/).
 Example code is available in the [`podman`](molecule/podman) Molecule scenario.
 
 Although a Molecule scenario also exists for [Docker](https://www.docker.com/)
@@ -37,11 +37,12 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 | Ubuntu 22.04 (Jammy Jellyfish) | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
 | Ubuntu 24.04 (Noble Numbat)    | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
 
-*Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian), from <https://github.com/alehaa/docker-debian-systemd>.*
+*Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian),
+from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-debian-systemd).*
 
 ### Build Instructions
 
-Container images built from these files are available at <https://ghcr.io/clifford2/molecule-platform>.
+Container images built from these files are available at [ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform).
 
 To build your own images from this source, you can build all images with:
 
@@ -52,27 +53,27 @@ make build-container
 Or build individual images with these commands:
 
 ```sh
-podman build -f podman/Containerfile.centos-stream8 -t molecule-platform:centos8 .
-podman build --pull -f podman/Containerfile.centos-stream9 -t molecule-platform:centos9 .
-podman build -f podman/Containerfile.debian12 -t molecule-platform:debian12 .
-podman build -f podman/Containerfile.debian13 -t molecule-platform:debian13 .
-podman build --pull -f podman/Containerfile.fedora40 -t molecule-platform:fedora40 .
-podman build --pull -f podman/Containerfile.fedora41 -t molecule-platform:fedora41 .
-podman build --pull -f podman/Containerfile.fedora42 -t molecule-platform:fedora42 .
-podman build --pull -f podman/Containerfile.fedora43 -t molecule-platform:fedora43 .
-podman build -f podman/Containerfile.sle15 -t molecule-platform:sle15 .
-podman build -f podman/Containerfile.sle16 -t molecule-platform:sle16 .
-podman build -f podman/Containerfile.ubuntu2204 -t molecule-platform:ubuntu2204 .
-podman build -f podman/Containerfile.ubuntu2404 -t molecule-platform:ubuntu2404 .
+make CTPLATFORMS=centos8 build-container
+make CTPLATFORMS=centos9 build-container
+make CTPLATFORMS=debian12 build-container
+make CTPLATFORMS=debian13 build-container
+make CTPLATFORMS=fedora40 build-container
+make CTPLATFORMS=fedora41 build-container
+make CTPLATFORMS=fedora42 build-container
+make CTPLATFORMS=fedora43 build-container
+make CTPLATFORMS=sle15 build-container
+make CTPLATFORMS=sle16 build-container
+make CTPLATFORMS=ubuntu2204 build-container
+make CTPLATFORMS=ubuntu2404 build-container
 ```
 
 ### Additional Images
 
-Other images that already contain systemd:
+The following images already contain systemd, and can be used as is in molecule scenarios:
 
-- `registry.access.redhat.com/ubi9/ubi-init:9.6`
-- `registry.access.redhat.com/ubi10/ubi-init:10.0`
-- [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
+- RHEL 9 UBI: `registry.access.redhat.com/ubi9/ubi-init:9.6`
+- RHEL 10 UBI: `registry.access.redhat.com/ubi10/ubi-init:10.0`
+- CentOS Stream 10 [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
 ### Molecule Example
 
@@ -84,20 +85,34 @@ Run with:
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install molecule 'ansible-core<2.17'
+ansible-galaxy install -r molecule/podman/collections.yml
 molecule test -s podman
 ```
 
 ## KubeVirt containerDisk Images
 
-An example Molecule configuration can be found in [`molecule/podman/`](molecule/podman).
+These `containerDisk` images store and distribute VM disks in the container
+image registry, and are used for creating KubeVirt VMs.
+
+**Note 2026-01-03**: more up to date images are available at
+<https://github.com/kubevirt/containerdisks>.
 
 ### Containerfiles
 
 Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
+| Linux Distribution           | Containerfile                                                             | Image name                        |
+| ---------------------------- | ------------------------------------------------------------------------- | --------------------------------- |
+| CentOS Stream 9              | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos9    |
+| CentOS Stream 10             | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos9    |
+| Debian 12 (Bookworm)         | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12   |
+| Debian 13 (Trixie)           | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13   |
+| openSUSE 15.6                | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:sle15      |
+| Ubuntu 24.04 (Noble Numbat)  | [`Containerfile.ubuntu2404`](kubevirt/Containerfile.ubuntu2404)           | kubevirt-containerdisk:ubuntu2404 |
+
 ### Build Instructions
 
-Container images built from these files are available at <https://ghcr.io/clifford2/kubevirt-containerdisk>.
+Container images built from these files are available at [ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk).
 
 To build your own images from this source, you can build all images with:
 
@@ -107,10 +122,11 @@ make build-vm
 
 ### Additional Images
 
-Other available images (requires authentication to pull):
+Other available images:
 
-- `registry.redhat.io/rhel9/rhel-guest-image`
-- `registry.redhat.io/rhel8/rhel-guest-image`
+- [KubeVirt curated Containerdisks](https://github.com/kubevirt/containerdisks)
+- RHEL 9: `registry.redhat.io/rhel9/rhel-guest-image` (*requires authentication to pull*)
+- RHEL 10: `registry.redhat.io/rhel8/rhel-guest-image` (*requires authentication to pull*)
 
 ### Molecule Example
 
@@ -122,7 +138,8 @@ Run with:
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install molecule 'ansible-core<2.17'
-python3 -m pip install -r molecule/shared/kubevirt-requirements.txt
+python3 -m pip install -r molecule/kubevirt/requirements.txt
+ansible-galaxy install -r molecule/kubevirt/collections.yml
 molecule test -s kubevirt
 ```
 
