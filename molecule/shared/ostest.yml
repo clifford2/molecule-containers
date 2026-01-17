@@ -55,7 +55,10 @@
 
     - name: "Check whether we're in a container"
       ansible.builtin.set_fact:
-        running_in_container: "{{ ((ansible_facts['virtualization_role'] == 'guest') and ((ansible_facts['virtualization_type'] == 'container') or (ansible_facts['virtualization_type'] == 'podman') or (ansible_facts['virtualization_type'] == 'docker'))) | bool }}"
+        running_in_container: "{{ ((ansible_facts['virtualization_role'] == 'guest')
+          and ((ansible_facts['virtualization_type'] == 'container')
+          or (ansible_facts['virtualization_type'] == 'podman')
+          or (ansible_facts['virtualization_type'] == 'docker'))) | bool }}"
 
     - name: 'Condition example: are we in a container?'
       ansible.builtin.debug:
@@ -122,8 +125,10 @@
 
         - name: 'Check compatibility with RHEL'
           ansible.builtin.set_fact:
-            rhel8_compat: "{{ (ansible_version.full is ansible.builtin.version('2.17.0', '<')) or ((ansible_facts['distribution_major_version'] | int) > 8) }}"
+            rhel8_compat: "{{ (ansible_version.full is ansible.builtin.version('2.17.0', '<'))
+              or ((ansible_facts['distribution_major_version'] | int) > 8) }}"
 
         - name: 'Show RHEL compatibility status'
           ansible.builtin.debug:
-            msg: "We can{% if not rhel8_compat %}'t{% endif %} support {{ ansible_facts.distribution }} {{ ansible_facts['distribution_major_version'] }} with Ansible {{ ansible_version.full }}"
+            msg: "We can{% if not rhel8_compat %}'t{% endif %} support {{ ansible_facts.distribution }}
+                 {{ ansible_facts['distribution_major_version'] }} with Ansible {{ ansible_version.full }}"

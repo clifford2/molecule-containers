@@ -31,7 +31,8 @@
       loop_control:
         loop_var: vm # Sets the variable for the current item in the loop
 
-    - name: 'Create Nodeport service if ssh_type is set to NodePort'  # Conditional block, executes if vm.ssh_service.type is NodePort
+    # Conditional block, executes if vm.ssh_service.type is NodePort
+    - name: 'Create Nodeport service if ssh_type is set to NodePort'
       when: "vm.ssh_service.type == 'NodePort'" # The block is executed when this condition is met
       block:
         - name: Create ssh NodePort Kubernetes Services'  # Creates a new NodePort service in Kubernetes

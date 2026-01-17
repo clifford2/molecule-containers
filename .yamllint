@@ -20,7 +20,7 @@ rules:
   document-start:
     level: error
   line-length:
-    max: 240
+    max: 150
     level: warning
   octal-values:
     # Required for ansible-lint 24.9.2 compatibility
