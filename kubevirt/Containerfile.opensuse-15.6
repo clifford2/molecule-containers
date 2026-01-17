@@ -9,8 +9,8 @@ FROM scratch
 
 # Obtain latest image name from https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.6/images/
 # Use image version & build here
-ARG VERSION=1.0.2-1.99
-ADD --chown=107:107 --chmod=0644 https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.6/images/openSUSE-Leap-15.6.x86_64-1.0.2-NoCloud-Build1.99.qcow2 /disk/
+ARG VERSION=1.0.2-2.1
+ADD --chown=107:107 --chmod=0644 https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.6/images/openSUSE-Leap-15.6.x86_64-1.0.2-NoCloud-Build2.1.qcow2 /disk/
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"

@@ -8,7 +8,7 @@ ARG GIT_REVISION
 FROM scratch
 
 # Obtain latest image from https://cloud-images.ubuntu.com/noble/
-ARG VERSION=20251213
+ARG VERSION=20260108
 ADD --chown=107:107 --chmod=0644 https://cloud-images.ubuntu.com/noble/${VERSION}/noble-server-cloudimg-amd64.img /disk/
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"

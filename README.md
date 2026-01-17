@@ -2,40 +2,63 @@
 
 ## About
 
-This code builds container images for various Linux distributions, for use as Ansible [`molecule`](https://ansible.readthedocs.io/projects/molecule/) testing platforms.
+Ansible [Molecule](https://docs.ansible.com/projects/molecule/) is an Ansible
+testing framework designed for developing and testing Ansible collections,
+playbooks, and roles.
 
-Two varieties are available, namely:
+This code builds container images for various Linux distributions, for use
+as Ansible `molecule` testing platforms.
+
+Images for two testing scenarios are available, namely:
 
 - Container images, for testing your playbooks in [Podman](https://podman.io/) containers
 - containerDisk images, for testing your playbooks in [KubeVirt](https://kubevirt.io/) VMs
 
 ## Container Images
 
-These container images were developed and tested with [Podman](https://podman.io/).
+For many Ansible playbooks, one of the easiest ways to test them against
+different Linux distributions & versions is in containers.
+
+One limitation of most Linux base container images is that they are created
+primarily for running a single application, and therefore do not have any
+init. In contrast, many playbooks, likely written for VMs, assume the presense
+of systemd. This is addressed by the images in this repository, by simply
+adding systemd to the base images.
+
+These images were developed and tested primarily for use with [Podman](https://podman.io/).
 Example code is available in the [`podman`](molecule/podman) Molecule scenario.
 
-Although a Molecule scenario also exists for [Docker](https://www.docker.com/)
-containers (see [`docker`](molecule/docker)), this doesn't cover all images
-(notably Debian based images), and has not been tested thoroughly.
+A Molecule scenario also exists for [Docker](https://www.docker.com/)
+containers (see [`docker`](molecule/docker)), but it doesn't cover all
+images (notably Debian based images), and has not been tested thoroughly.
 
-### Containerfiles
+### Platforms With Existing Images
+
+The following images already contain systemd, and can be used as is:
+
+- Red Hat Universal Base Image 8: `registry.access.redhat.com/ubi8/ubi-init:8.10`
+- Red Hat Universal Base Image 9: `registry.access.redhat.com/ubi9/ubi-init:9.7`
+- Red Hat Universal Base Image 10: `registry.access.redhat.com/ubi10/ubi-init:10.1`
+- CentOS Stream 10: [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
+
+### Our Custom Images
 
 Our Containerfiles (in the [`podman/`](podman) directory):
 
-| Linux Distribution             | Containerfile                                                         | Image name                   |
-| ------------------------------ | --------------------------------------------------------------------- | ---------------------------- |
-| CentOS Stream 8                | [`Containerfile.centos-stream8`](podman/Containerfile.centos-stream8) | molecule-platform:centos8    |
-| CentOS Stream 9                | [`Containerfile.centos-stream9`](podman/Containerfile.centos-stream9) | molecule-platform:centos9    |
-| Debian 12 (Bookworm)           | [`Containerfile.debian12`](podman/Containerfile.debian12)             | molecule-platform:debian12   |
-| Debian 13 (Trixie)             | [`Containerfile.debian13`](podman/Containerfile.debian13)             | molecule-platform:debian13   |
-| Fedora 40                      | [`Containerfile.fedora40`](podman/Containerfile.fedora40)             | molecule-platform:fedora40   |
-| Fedora 41                      | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41   |
-| Fedora 42                      | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42   |
-| Fedora 43                      | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43   |
-| SLE BCI (SLES 15) based        | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15      |
-| SLE BCI (SLES 16) based        | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16      |
-| Ubuntu 22.04 (Jammy Jellyfish) | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
-| Ubuntu 24.04 (Noble Numbat)    | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
+| Linux Distribution                       | Containerfile                                                         | Image name                   |
+| ---------------------------------------- | --------------------------------------------------------------------- | ---------------------------- |
+| CentOS Stream 8 (*EOL as of 2024-05-31*) | [`Containerfile.centos-stream8`](podman/Containerfile.centos-stream8) | molecule-platform:centos8    |
+| CentOS Stream 9                          | [`Containerfile.centos-stream9`](podman/Containerfile.centos-stream9) | molecule-platform:centos9    |
+| Debian 12 (Bookworm)                     | [`Containerfile.debian12`](podman/Containerfile.debian12)             | molecule-platform:debian12   |
+| Debian 13 (Trixie)                       | [`Containerfile.debian13`](podman/Containerfile.debian13)             | molecule-platform:debian13   |
+| Fedora 40                                | [`Containerfile.fedora40`](podman/Containerfile.fedora40)             | molecule-platform:fedora40   |
+| Fedora 41                                | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41   |
+| Fedora 42                                | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42   |
+| Fedora 43                                | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43   |
+| SLE BCI (SLES 15) based                  | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15      |
+| SLE BCI (SLES 16) based                  | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16      |
+| Ubuntu 22.04 (Jammy Jellyfish)           | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
+| Ubuntu 24.04 (Noble Numbat)              | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
 
 *Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian),
 from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-debian-systemd).*
@@ -67,48 +90,60 @@ make CTPLATFORMS=ubuntu2204 build-container
 make CTPLATFORMS=ubuntu2404 build-container
 ```
 
-### Additional Images
-
-The following images already contain systemd, and can be used as is in molecule scenarios:
-
-- RHEL 9 UBI: `registry.access.redhat.com/ubi9/ubi-init:9.6`
-- RHEL 10 UBI: `registry.access.redhat.com/ubi10/ubi-init:10.0`
-- CentOS Stream 10: [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
-
 ### Molecule Example
 
 An example Molecule configuration can be found in [`molecule/podman/`](molecule/podman).
-
-Run with:
+Run it with these commands:
 
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install molecule 'ansible-core<2.17'
+python3 -m pip install molecule 'ansible-core>=2.16,<2.17'
 ansible-galaxy install -r molecule/podman/collections.yml
 molecule test -s podman
 ```
 
+Please note the use of Ansible 2.16 here. This is because [Newer versions of Ansible don't work with RHEL 8](https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8/), particularly for DNF package tasks.
+It is also worth noting that Red Hat use Ansible 2.16 in the Ansible Automation Platform (as of version 2.6, released in 2025).
+
+More recent Ansible versions work for other images though.
+The most recent tests were performed on 2025-01-17, using python 3.12, ansible-core 2.20.1 and molecule 25.4.0.
+
 ## KubeVirt containerDisk Images
 
-These `containerDisk` images store and distribute VM disks in the container
-image registry, and are used for creating KubeVirt VMs.
+For some Ansible playbooks, testing in a container isn't possible. Examples include time sync and auditd.
 
-**Note 2026-01-03**: more up to date images are available at
-<https://github.com/kubevirt/containerdisks>.
+For such playbooks, we can test in a VM, and one way to do that is inside Kubernetes, with [KubeVirt](https://kubevirt.io/).
 
-### Containerfiles
+KubeVirt uses `containerDisk` images, which store and distribute VM disks in the container image registry.
+
+### Platforms With Existing Images
+
+As of 2026-01, Containerdisks are readily available elsewhere, and are *usually more up to date* than the ones in this repository.
+Available images include:
+
+- [KubeVirt curated Containerdisks](https://github.com/kubevirt/containerdisks). As of 2026-01, available images include:
+	- [CentOS Stream](https://quay.io/repository/containerdisks/centos-stream) 9 & 10
+	- [Fedora](https://quay.io/repository/containerdisks/fedora) 39 - 43
+	- [Ubuntu](https://quay.io/repository/containerdisks/ubuntu) 22.04, 24.04, 25.04
+	- [OpenSUSE Tumbleweed](https://quay.io/repository/containerdisks/opensuse-tumbleweed)
+	- [OpenSUSE Leap](https://quay.io/repository/containerdisks/opensuse-leap) 15.6
+	- [Debian]https://quay.io/repository/containerdisks/debian) 11 - 13
+- RHEL 9: `registry.redhat.io/rhel9/rhel-guest-image` (*requires authentication to pull*)
+- RHEL 10: `registry.redhat.io/rhel8/rhel-guest-image` (*requires authentication to pull*)
+
+### Our Containerfiles
 
 Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
-| Linux Distribution           | Containerfile                                                             | Image name                        |
-| ---------------------------- | ------------------------------------------------------------------------- | --------------------------------- |
-| CentOS Stream 9              | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos9    |
-| CentOS Stream 10             | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos9    |
-| Debian 12 (Bookworm)         | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12   |
-| Debian 13 (Trixie)           | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13   |
-| openSUSE 15.6                | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:sle15      |
-| Ubuntu 24.04 (Noble Numbat)  | [`Containerfile.ubuntu2404`](kubevirt/Containerfile.ubuntu2404)           | kubevirt-containerdisk:ubuntu2404 |
+| Linux Distribution           | Containerfile                                                             | Image name                           |
+| ---------------------------- | ------------------------------------------------------------------------- | ------------------------------------ |
+| CentOS Stream 9              | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos9       |
+| CentOS Stream 10             | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos9       |
+| Debian 12 (Bookworm)         | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12      |
+| Debian 13 (Trixie)           | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13      |
+| openSUSE Leap 15.6           | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:opensuse-15.6 |
+| Ubuntu 24.04 (Noble Numbat)  | [`Containerfile.ubuntu2404`](kubevirt/Containerfile.ubuntu2404)           | kubevirt-containerdisk:ubuntu2404    |
 
 ### Build Instructions
 
@@ -120,14 +155,6 @@ To build your own images from this source, you can build all images with:
 make build-vm
 ```
 
-### Additional Images
-
-Other available images:
-
-- [KubeVirt curated Containerdisks](https://github.com/kubevirt/containerdisks)
-- RHEL 9: `registry.redhat.io/rhel9/rhel-guest-image` (*requires authentication to pull*)
-- RHEL 10: `registry.redhat.io/rhel8/rhel-guest-image` (*requires authentication to pull*)
-
 ### Molecule Example
 
 An example Molecule configuration can be found in [`molecule/kubevirt/`](molecule/kubevirt).
@@ -137,7 +164,7 @@ Run with:
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install molecule 'ansible-core<2.17'
+python3 -m pip install molecule 'ansible-core>=2.16,<2.17'
 python3 -m pip install -r molecule/kubevirt/requirements.txt
 ansible-galaxy install -r molecule/kubevirt/collections.yml
 molecule test -s kubevirt

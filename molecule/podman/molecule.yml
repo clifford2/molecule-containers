@@ -27,7 +27,7 @@ platforms:
     command: /sbin/init
   # Red Hat Universal Base Image 9
   - name: molecule-example-ubi9
-    image: registry.access.redhat.com/ubi9/ubi-init:9.7-1766406466
+    image: registry.access.redhat.com/ubi9/ubi-init:9.7-1767716780
     command: /sbin/init
   # Red Hat Universal Base Image 10
   - name: molecule-example-ubi10
@@ -47,11 +47,11 @@ platforms:
     command: /sbin/init
   # Debian 12 (Bookworm)
   - name: molecule-example-debian12
-    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.5
+    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.6
     command: /sbin/init
   # Debian 13 (Trixie)
   - name: molecule-example-debian13
-    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.1
+    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.2
     command: /sbin/init
   # Fedora 40
   - name: molecule-example-fedora40
@@ -71,11 +71,11 @@ platforms:
     command: /sbin/init
   # SLES 15
   - name: molecule-example-sle15
-    image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.5
+    image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.6
     command: /sbin/init
   # SLES 16
   - name: molecule-example-sle16
-    image: ghcr.io/clifford2/molecule-platform:sle16.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:sle16.v1.0.1
     command: /sbin/init
   # Ubuntu 22.04 LTS
   - name: molecule-example-ubuntu2204

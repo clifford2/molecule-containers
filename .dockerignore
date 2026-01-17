@@ -6,5 +6,6 @@
 /.yamllint
 /README.md
 /Dockerfile*
+/LICENSES/
 /molecule/
 .venv/

@@ -34,7 +34,10 @@
 
     - name: "Print some info"
       ansible.builtin.debug:
-        msg: "{{ molecule_podman_container_result.results }}"
+        msg: "{{ item.actions }}"
+      loop: "{{ molecule_podman_container_result.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"
 
     - name: "Fail if container is not running"
       when: >
@@ -55,7 +58,7 @@
                 hosts:
                   "{{ item.name }}":
                     ansible_connection: containers.podman.podman
-                    become_method: containers.podman.podman_unshare
+                    ansible_become_method: containers.podman.podman_unshare
                     ansible_user: root
       ansible.builtin.set_fact:
         molecule_inventory: >

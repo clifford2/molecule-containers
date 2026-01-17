@@ -8,7 +8,7 @@ ARG GIT_REVISION
 FROM scratch
 
 # Obtain latest image file from https://cdimage.debian.org/images/cloud/bookworm/
-ARG VERSION=20251112-2294
+ARG VERSION=20260112-2355
 ADD --chown=107:107 --chmod=0644 https://cdimage.debian.org/images/cloud/bookworm/${VERSION}/debian-12-genericcloud-amd64-${VERSION}.qcow2 /disk/
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
