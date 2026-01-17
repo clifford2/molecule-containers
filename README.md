@@ -2,16 +2,16 @@
 
 ## About
 
-Ansible [Molecule](https://docs.ansible.com/projects/molecule/) is an Ansible
-testing framework designed for developing and testing Ansible collections,
-playbooks, and roles.
+[Molecule](https://docs.ansible.com/projects/molecule/) is a testing framework
+for the [Ansible](https://github.com/ansible/ansible) IT automation system,
+designed for developing and testing Ansible collections, playbooks, and roles.
 
 This code builds container images for various Linux distributions, for use
 as Ansible `molecule` testing platforms.
 
 Images for two testing scenarios are available, namely:
 
-- Container images, for testing your playbooks in [Podman](https://podman.io/) containers
+- Container images, for testing your playbooks in [Podman](https://podman.io/) or [Docker](https://www.docker.com/) containers
 - containerDisk images, for testing your playbooks in [KubeVirt](https://kubevirt.io/) VMs
 
 ## Container Images
@@ -24,13 +24,6 @@ primarily for running a single application, and therefore do not have any
 init. In contrast, many playbooks, likely written for VMs, assume the presense
 of systemd. This is addressed by the images in this repository, by simply
 adding systemd to the base images.
-
-These images were developed and tested primarily for use with [Podman](https://podman.io/).
-Example code is available in the [`podman`](molecule/podman) Molecule scenario.
-
-A Molecule scenario also exists for [Docker](https://www.docker.com/)
-containers (see [`docker`](molecule/docker)), but it doesn't cover all
-images (notably Debian based images), and has not been tested thoroughly.
 
 ### Platforms With Existing Images
 
@@ -92,7 +85,11 @@ make CTPLATFORMS=ubuntu2404 build-container
 
 ### Molecule Example
 
-An example Molecule configuration can be found in [`molecule/podman/`](molecule/podman).
+#### Podman
+
+These images were developed and tested primarily for use with [Podman](https://podman.io/).
+
+An example Molecule scenario can be found in [`molecule/podman/`](molecule/podman).
 Run it with these commands:
 
 ```sh
@@ -100,14 +97,30 @@ python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install molecule 'ansible-core>=2.16,<2.17'
 ansible-galaxy install -r molecule/podman/collections.yml
+python3 -m pip install -r molecule/docker/requirements.txt
 molecule test -s podman
 ```
 
 Please note the use of Ansible 2.16 here. This is because [Newer versions of Ansible don't work with RHEL 8](https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8/), particularly for DNF package tasks.
 It is also worth noting that Red Hat use Ansible 2.16 in the Ansible Automation Platform (as of version 2.6, released in 2025).
 
-More recent Ansible versions work for other images though.
-The most recent tests were performed on 2025-01-17, using python 3.12, ansible-core 2.20.1 and molecule 25.4.0.
+More recent Ansible versions work for all other images though.
+Our most recent tests were performed on 2025-01-17, using python 3.12, ansible-core 2.20.1 and molecule 25.4.0.
+
+#### Docker
+
+An exampl Molecule scenario also exists for [Docker](https://www.docker.com/) containers, in [`docker`](molecule/docker).
+This currently works for all images except for Debian based images (where there is an unresolved cgroup permission problem).
+Run it with these commands:
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install molecule 'ansible-core>=2.16,<2.17'
+python3 -m pip install -r molecule/docker/requirements.txt
+ansible-galaxy install -r molecule/docker/collections.yml
+molecule test -s docker
+```
 
 ## KubeVirt containerDisk Images
 

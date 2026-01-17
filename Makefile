@@ -5,7 +5,7 @@
 # Configuration for podman/docker images (molecule-platform:$platform.$VER)
 CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 fedora43 sle15 sle16 ubuntu2204 ubuntu2404
 CTREGISTRY := ghcr.io/clifford2
-CTMOLECULEFILE := molecule/podman/molecule.yml
+CTMOLECULEFILES := molecule/podman/molecule.yml molecule/docker/molecule.yml
 
 # Configuration for KubeVirt containerDisk images (kubevirt-containerdisk:$platform.$VER)
 VMPLATFORMS := centos-stream9 centos-stream10 debian12 debian13 opensuse-15.6 ubuntu2404
@@ -96,7 +96,7 @@ updatever-container:
 	@for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		echo "molecule-platform:$$platform.$$VER" ; \
-		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: $(CTREGISTRY)/molecule-platform:$$platform.$$VER|" $(CTMOLECULEFILE) ; \
+		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: $(CTREGISTRY)/molecule-platform:$$platform.$$VER|" $(CTMOLECULEFILES) ; \
 	done
 
 # Push podman/docker container images (redundant, as images are built by GitHub Actions)

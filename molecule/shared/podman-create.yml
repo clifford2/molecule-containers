@@ -34,7 +34,7 @@
 
     - name: "Print some info"
       ansible.builtin.debug:
-        msg: "{{ item.actions }}"
+        msg: "Image: {{ item.container.Config.Image }}"
       loop: "{{ molecule_podman_container_result.results }}"
       loop_control:
         label: "{{ item.item.name }}"
@@ -104,4 +104,8 @@
       ansible.builtin.debug:
         msg:
           - "uname -a: {{ molecule_podman_uname_result.stdout }}"
-          - "PRETTY_NAME: {{ molecule_podman_osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"
+          - "PRETTY_NAME: {{ molecule_podman_osfile.content
+              | ansible.builtin.b64decode
+              | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True)
+              | ansible.builtin.regex_replace('PRETTY_NAME=', '')
+              | ansible.builtin.regex_replace('\"', '') }}"

@@ -21,18 +21,17 @@ provisioner:
     converge: "converge.yml"
     destroy: "../shared/docker-destroy.yml"
 platforms:
-#  # Red Hat Universal Base Image 8
-#  # /usr/bin/python3: No such file or directory
-#  - name: molecule-example-ubi8
-#    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1756225952
-#    command: /sbin/init
+  # Red Hat Universal Base Image 8
+  - name: molecule-example-ubi8
+    image: registry.access.redhat.com/ubi8/ubi-init:8.10-1766364179
+    command: /sbin/init
   # Red Hat Universal Base Image 9
   - name: molecule-example-ubi9
-    image: registry.access.redhat.com/ubi9/ubi-init:9.6-1756999027
+    image: registry.access.redhat.com/ubi9/ubi-init:9.7-1767716780
     command: /sbin/init
   # Red Hat Universal Base Image 10
   - name: molecule-example-ubi10
-    image: registry.access.redhat.com/ubi10/ubi-init:10.0-1755764354
+    image: registry.access.redhat.com/ubi10/ubi-init:10.1-1763368398
     command: /sbin/init
   # CentOS Stream 8
   - name: molecule-example-centos8
@@ -40,31 +39,33 @@ platforms:
     command: /sbin/init
   # CentOS Stream 9
   - name: molecule-example-centos9
-    image: ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.1
+    image: ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.1-20251224
     command: /sbin/init
   # CentOS Stream 10
   - name: molecule-example-centos10
     image: quay.io/centos/centos:stream10
     command: /sbin/init
 #  # Debian 12 (Bookworm)
+#  # Failed to mount cgroup at /sys/fs/cgroup/systemd: Operation not permitted
 #  - name: molecule-example-debian12
-#    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.4
+#    image: ghcr.io/clifford2/molecule-platform:debian12.v1.0.6
 #    command: /sbin/init
 #  # Debian 13 (Trixie)
+#  # Failed to mount cgroup (type cgroup) on /sys/fs/cgroup/systemd (MS_NOSUID|MS_NODEV|MS_NOEXEC "none,name=systemd"): Operation not permitted
 #  - name: molecule-example-debian13
-#    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.0
+#    image: ghcr.io/clifford2/molecule-platform:debian13.v1.0.2
 #    command: /sbin/init
-#  # Fedora 40
-#  - name: molecule-example-fedora40
-#    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0
-#    command: /sbin/init
+  # Fedora 40
+  - name: molecule-example-fedora40
+    image: ghcr.io/clifford2/molecule-platform:fedora40.v1.0.0-20260102
+    command: /sbin/init
   # Fedora 41
   - name: molecule-example-fedora41
-    image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:fedora41.v1.0.0-20260102
     command: /sbin/init
   # Fedora 42
   - name: molecule-example-fedora42
-    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.2
+    image: ghcr.io/clifford2/molecule-platform:fedora42.v1.0.2-20260102
     command: /sbin/init
   # Fedora 43
   - name: molecule-example-fedora43
@@ -72,17 +73,19 @@ platforms:
     command: /sbin/init
   # SLES 15
   - name: molecule-example-sle15
-    image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.4
+    image: ghcr.io/clifford2/molecule-platform:sle15.v1.0.6
     command: /sbin/init
   # SLES 16
   - name: molecule-example-sle16
-    image: ghcr.io/clifford2/molecule-platform:sle16.v1.0.0
+    image: ghcr.io/clifford2/molecule-platform:sle16.v1.0.1
     command: /sbin/init
 #  # Ubuntu 22.04 LTS
+#  # Failed to mount cgroup at /sys/fs/cgroup/systemd: Operation not permitted
 #  - name: molecule-example-ubuntu2204
-#    image: ghcr.io/clifford2/molecule-platform:ubuntu2204.v1.0.2
+#    image: ghcr.io/clifford2/molecule-platform:ubuntu2204.v1.0.3
 #    command: /sbin/init
 #  # Ubuntu 24.04 LTS
+#  # Failed to mount cgroup (type cgroup) on /sys/fs/cgroup/systemd (MS_NOSUID|MS_NODEV|MS_NOEXEC "none,name=systemd"): Operation not permitted
 #  - name: molecule-example-ubuntu2404
-#    image: ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.2
+#    image: ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.3
 #    command: /sbin/init

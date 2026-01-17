@@ -36,7 +36,10 @@
 
     - name: "Print some info"
       ansible.builtin.debug:
-        msg: "{{ molecule_docker_container_result.results }}"
+        msg: "Image: {{ item.container.Config.Image }}"
+      loop: "{{ molecule_docker_container_result.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"
 
     - name: "Fail if container is not running"
       when: >
@@ -101,4 +104,8 @@
       ansible.builtin.debug:
         msg:
           - "uname -a: {{ molecule_docker_uname_result.stdout }}"
-          - "PRETTY_NAME: {{ molecule_docker_osfile.content | ansible.builtin.b64decode | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True) | ansible.builtin.regex_replace('PRETTY_NAME=', '') | ansible.builtin.regex_replace('\"', '') }}"
+          - "PRETTY_NAME: {{ molecule_docker_osfile.content
+              | ansible.builtin.b64decode
+              | ansible.builtin.regex_search('^PRETTY_NAME=\".+\"', multiline=True)
+              | ansible.builtin.regex_replace('PRETTY_NAME=', '')
+              | ansible.builtin.regex_replace('\"', '') }}"
