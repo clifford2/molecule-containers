@@ -10,7 +10,7 @@ ARG GIT_REVISION
 # Base image is not immutable
 # Semver version number is changed when config changes;
 # Date suffix is changed to trigger new build, and is based on build date of most recent image at the time
-ARG VERSION=1.0.2-20260102
+ARG VERSION=1.0.2-20260423
 
 FROM quay.io/fedora/fedora:42
 

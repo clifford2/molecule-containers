@@ -4,84 +4,91 @@
 
 ---
 driver:
-  name: default
+  name: "default"
 dependency:
-  name: galaxy
+  name: "galaxy"
   options:
-    requirements-file: molecule/kubevirt/collections.yml
+    requirements-file: "molecule/kubevirt/collections.yml"
 provisioner:
-  name: ansible
+  name: "ansible"
   playbooks:
-    create: ../shared/kubevirt-create.yml
-    destroy: ../shared/kubevirt-destroy.yml
+    create: "../shared/kubevirt-create.yml"
+    destroy: "../shared/kubevirt-destroy.yml"
   config_options:
     defaults:
-      interpreter_python: auto_silent
-      callback_whitelist: profile_tasks, timer, yaml
+      interpreter_python: "auto_silent"
+      callback_whitelist: "profile_tasks, timer, yaml"
     ssh_connection:
       pipelining: false
   log: true
 verifier:
-  name: ansible
+  name: "ansible"
 scenario:
   test_sequence:
-    - dependency
-    - destroy
-    - syntax
-    - create
-    - converge
-    - idempotence
-    - side_effect
-    - verify
-    - destroy
+    - "dependency"
+    - "destroy"
+    - "syntax"
+    - "create"
+    - "converge"
+    - "idempotence"
+    - "side_effect"
+    - "verify"
+    - "destroy"
 platforms:
 #  # K8s needs to authenticate to registry.redhat.io to pull this image
-#  - name: molecule-example-rhel9
-#    image: registry.redhat.io/rhel9/rhel-guest-image
-#    namespace: molecule
+#  - name: "molecule-example-rhel9"
+#    image: "registry.redhat.io/rhel9/rhel-guest-image"
+#    namespace: "molecule"
 #    ssh_service:
-#      type: NodePort
-#    ansible_user: cloud-user
-#    memory: 1Gi
-  - name: molecule-example-centos9
-    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream9.v20260113.0
-    namespace: molecule
+#      type: "NodePort"
+#    ansible_user: "cloud-user"
+#    memory: "1Gi"
+  - name: "molecule-example-centos9"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:centos-stream9.v20260113.0"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
-  - name: molecule-example-centos10
-    image: ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10.v20260113.1
-    namespace: molecule
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-centos10"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10.v20260421.0"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
-  - name: molecule-example-debian12
-    image: ghcr.io/clifford2/kubevirt-containerdisk:debian12.v20260112-2355
-    namespace: molecule
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-debian12"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:debian12.v20260112-2355"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
-  - name: molecule-example-debian13
-    image: ghcr.io/clifford2/kubevirt-containerdisk:debian13.v20260112-2355
-    namespace: molecule
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-debian13"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:debian13.v20260112-2355"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
-  - name: molecule-example-opensuse15
-    image: ghcr.io/clifford2/kubevirt-containerdisk:opensuse-15.6.v1.0.2-2.1
-    namespace: molecule
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-opensuse15"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:opensuse-15.6.v1.0.2-2.1"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
-  - name: molecule-example-ubuntu24
-    image: ghcr.io/clifford2/kubevirt-containerdisk:ubuntu2404.v20260108
-    namespace: molecule
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-ubuntu24"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:ubuntu2404.v20260323"
+    namespace: "molecule"
     ssh_service:
-      type: NodePort
-    ansible_user: molecule
-    memory: 1Gi
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"
+  - name: "molecule-example-ubuntu26"
+    image: "ghcr.io/clifford2/kubevirt-containerdisk:ubuntu2604.v20260421"
+    namespace: "molecule"
+    ssh_service:
+      type: "NodePort"
+    ansible_user: "molecule"
+    memory: "1Gi"

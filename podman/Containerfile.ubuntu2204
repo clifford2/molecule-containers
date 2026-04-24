@@ -7,10 +7,10 @@
 
 ARG BUILD_TIME
 ARG GIT_REVISION
-ARG VERSION=1.0.3
+ARG VERSION=1.0.4
 
 # Ubuntu 22.04 LTS
-FROM docker.io/library/ubuntu:jammy-20251013
+FROM docker.io/library/ubuntu:jammy-20260410
 
 # Configure the debconf frontend.
 #
