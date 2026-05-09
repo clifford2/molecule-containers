@@ -5,6 +5,7 @@
 name: "Create & publish Ubuntu 24.04 KubeVirt containerDisk image"
 
 "on":
+  workflow_dispatch:
   push:
     # Configures this workflow to run every time a change is pushed to the branch called `main`.
     branches: ['main']
@@ -15,20 +16,20 @@ name: "Create & publish Ubuntu 24.04 KubeVirt containerDisk image"
 jobs:
 
   build-vm-images:
-    runs-on: ubuntu-24.04
+    runs-on: "ubuntu-24.04"
     permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
+      contents: "read"
+      packages: "write"
+      attestations: "write"
+      id-token: "write"
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: "Checkout repository"
+        uses: "actions/checkout@v6"
 
-      - name: Log in to the Container registry
+      - name: "Log in to the Container registry"
         run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Build & push kubevirt VM images
+      - name: "Build name: Build & push kubevirt VM images push kubevirt VM images"
         run: |
           make .build-push-vm VMPLATFORMS=ubuntu2404
