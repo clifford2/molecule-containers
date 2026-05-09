@@ -5,30 +5,31 @@
 name: "Create & publish Fedora 44 container image"
 
 "on":
+  workflow_dispatch:
   push:
     # Configures this workflow to run every time a change is pushed to the branch called `main`.
-    branches: ['main']
+    branches: ["main"]
     # Pattern matched specific path
     paths:
-      - 'podman/Containerfile.fedora44'
+      - "podman/Containerfile.fedora44"
 
 jobs:
 
   build-container-images:
-    runs-on: ubuntu-24.04
+    runs-on: "ubuntu-24.04"
     permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
+      contents: "read"
+      packages: "write"
+      attestations: "write"
+      id-token: "write"
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: "Checkout repository"
+        uses: "actions/checkout@v6"
 
-      - name: Log in to the Container registry
+      - name: "Log in to the Container registry"
         run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Build & push container images
+      - name: "Build & push container images"
         run: |
           make .build-push-container CTPLATFORMS=fedora44
