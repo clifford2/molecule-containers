@@ -69,6 +69,10 @@ platforms:
   - name: "molecule-example-fedora43"
     image: "ghcr.io/clifford2/molecule-platform:fedora43.v1.0.0-20260423"
     command: "/sbin/init"
+  # Fedora 44
+  - name: "molecule-example-fedora44"
+    image: "ghcr.io/clifford2/molecule-platform:fedora44.v1.0.0-20260508"
+    command: "/sbin/init"
   # SLES 15
   - name: "molecule-example-sle15"
     image: "ghcr.io/clifford2/molecule-platform:sle15.v1.0.7"

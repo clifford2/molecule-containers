@@ -48,6 +48,7 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 | Fedora 41 (*EOL 2025-12-15*)             | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41   |
 | Fedora 42                                | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42   |
 | Fedora 43                                | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43   |
+| Fedora 44                                | [`Containerfile.fedora44`](podman/Containerfile.fedora44)             | molecule-platform:fedora44   |
 | SLE BCI (SLES 15) based                  | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15      |
 | SLE BCI (SLES 16) based                  | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16      |
 | Ubuntu 22.04 (Jammy Jellyfish)           | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
@@ -78,6 +79,7 @@ make CTPLATFORMS=fedora40 build-container
 make CTPLATFORMS=fedora41 build-container
 make CTPLATFORMS=fedora42 build-container
 make CTPLATFORMS=fedora43 build-container
+make CTPLATFORMS=fedora44 build-container
 make CTPLATFORMS=sle15 build-container
 make CTPLATFORMS=sle16 build-container
 make CTPLATFORMS=ubuntu2204 build-container
@@ -139,7 +141,7 @@ Available images include:
 
 - [KubeVirt curated Containerdisks](https://github.com/kubevirt/containerdisks). As of 2026-01, available images include:
 	- [CentOS Stream](https://quay.io/repository/containerdisks/centos-stream) 9 & 10
-	- [Fedora](https://quay.io/repository/containerdisks/fedora) 39 - 43
+	- [Fedora](https://quay.io/repository/containerdisks/fedora) 39 - 44
 	- [Ubuntu](https://quay.io/repository/containerdisks/ubuntu) 22.04, 24.04, 25.04
 	- [OpenSUSE Tumbleweed](https://quay.io/repository/containerdisks/opensuse-tumbleweed)
 	- [OpenSUSE Leap](https://quay.io/repository/containerdisks/opensuse-leap) 15.6

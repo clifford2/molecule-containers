@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT-0
 
 # Configuration for podman/docker images (molecule-platform:$platform.$VER)
-CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 fedora43 sle15 sle16 ubuntu2204 ubuntu2404 ubuntu2604
+CTPLATFORMS := centos-stream8 centos-stream9 debian12 debian13 fedora40 fedora41 fedora42 fedora43 fedora44 sle15 sle16 ubuntu2204 ubuntu2404 ubuntu2604
 CTREGISTRY := ghcr.io/clifford2
 CTMOLECULEFILES := molecule/podman/molecule.yml molecule/docker/molecule.yml
 
