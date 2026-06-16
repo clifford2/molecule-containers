@@ -96,7 +96,7 @@ build-multiarch-container: BUILD_CMD := docker buildx build --platform linux/amd
 build-multiarch-container:
 	for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
-		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f podman/Containerfile.$$platform -t $(CTREGISTRY)/molecule-platform:$$platform.$$VER -t $(CTREGISTRY)/molecule-platform:$$platform .
+		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f podman/Containerfile.$$platform -t $(CTREGISTRY)/molecule-platform:$$platform.$$VER -t $(CTREGISTRY)/molecule-platform:$$platform . ; \
 	done
 
 # Update container image versions in molecule/podman/molecule.yml
