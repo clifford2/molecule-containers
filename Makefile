@@ -19,7 +19,7 @@ VMMOLECULEFILE := molecule/kubevirt/molecule.yml
 # 	CONTAINER_ENGINE := podman
 # endif
 #
-# Forcing use of podman, as docker code is experimental multi-arch, and not working yet
+# Defaulting to podman, as docker code is experimental multi-arch, and not working yet
 CONTAINER_ENGINE := podman
 
 BUILD_TIME := $(shell TZ=UTC date '+%Y-%m-%dT%H:%M:%SZ')
@@ -75,7 +75,7 @@ showver-container:
 # Build podman/docker container images (molecule-platform:$platform.$VER - no registry in name)
 .PHONY: build-container
 build-container:
-	@for platform in $(CTPLATFORMS); do \
+	for platform in $(CTPLATFORMS); do \
 		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
 		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f podman/Containerfile.$$platform -t molecule-platform:$$platform.$$VER . && \
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER molecule-platform:$$platform ; \
@@ -90,6 +90,15 @@ tag-container: updatever-container
 		$(CONTAINER_ENGINE) tag molecule-platform:$$platform.$$VER $(CTREGISTRY)/molecule-platform:$$platform ; \
 	done
 
+# Build & push multi-architecture container images with docker
+.PHONY: build-multiarch-container
+build-multiarch-container: BUILD_CMD := docker buildx build --platform linux/amd64,linux/arm64 --push
+build-multiarch-container:
+	for platform in $(CTPLATFORMS); do \
+		VER=v$$(awk 'BEGIN {FS="="} /ARG VERSION/ {print $$2}' podman/Containerfile.$$platform) ; \
+		$(BUILD_CMD) --build-arg=BUILD_TIME="$(BUILD_TIME)" --build-arg=GIT_REVISION="$(GIT_REVISION)" -f podman/Containerfile.$$platform -t $(CTREGISTRY)/molecule-platform:$$platform.$$VER -t $(CTREGISTRY)/molecule-platform:$$platform .
+	done
+
 # Update container image versions in molecule/podman/molecule.yml
 .PHONY: updatever-container
 updatever-container:
@@ -99,7 +108,7 @@ updatever-container:
 		sed -i -e "s|image: .*/molecule-platform:$$platform..*|image: \"$(CTREGISTRY)/molecule-platform:$$platform.$$VER\"|" $(CTMOLECULEFILES) ; \
 	done
 
-# Push podman/docker container images (redundant, as images are built by GitHub Actions)
+# Push podman/docker container images
 .PHONY: .push-container
 .push-container: tag-container
 	@for platform in $(CTPLATFORMS); do \
@@ -151,7 +160,7 @@ updatever-vm:
 		sed -i -e "s|image: .*/kubevirt-containerdisk:$$platform..*|image: \"$(VMREGISTRY)/kubevirt-containerdisk:$$platform.$$VER\"|" $(VMMOLECULEFILE) ; \
 	done
 
-# Push KubeVirt containerDisk images (redundant, as images are built by GitHub Actions)
+# Push KubeVirt containerDisk images
 .PHONY: .push-vm
 .push-vm: tag-vm
 	@for platform in $(VMPLATFORMS); do \
