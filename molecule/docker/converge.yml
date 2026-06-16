@@ -3,15 +3,15 @@
 
 ---
 - name: "Converge"
-  hosts: all
+  hosts: "all"
   gather_facts: false
   tasks:
 
     - name: "Collect required facts"
       ansible.builtin.setup:
         gather_subset:
-          - os_family
-          - distribution
+          - "os_family"
+          - "distribution"
 
     - name: "Show some facts about our container"
       ansible.builtin.debug:

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT-0
 
 ---
-- name: Create VM dictionary
+- name: "Create VM dictionary"
   vars:
     # This variable block is setting the `ssh_service_address` variable.
     # It first checks if the service type of the SSH service is 'NodePort'.

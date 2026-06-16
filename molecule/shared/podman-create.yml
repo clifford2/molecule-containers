@@ -6,7 +6,7 @@
 
 ---
 - name: "Create"
-  hosts: localhost
+  hosts: "localhost"
   gather_facts: false
   vars:
     molecule_inventory:
@@ -29,7 +29,7 @@
         command: "{{ item.command | default('sleep 1d') }}"
         # bash -c "while true; do sleep 10000; done"
         log_driver: "json-file"
-      register: molecule_podman_container_result
+      register: "molecule_podman_container_result"
       loop: "{{ molecule_yml.platforms }}"
 
     - name: "Print some info"
@@ -57,8 +57,8 @@
               molecule:
                 hosts:
                   "{{ item.name }}":
-                    ansible_connection: containers.podman.podman
-                    ansible_become_method: containers.podman.podman_unshare
+                    ansible_connection: "containers.podman.podman"
+                    ansible_become_method: "containers.podman.podman_unshare"
                     ansible_user: root
       ansible.builtin.set_fact:
         molecule_inventory: >
@@ -75,7 +75,7 @@
         mode: "0600"
 
     - name: "Force inventory refresh"
-      ansible.builtin.meta: refresh_inventory
+      ansible.builtin.meta: "refresh_inventory"
 
     - name: "Fail if molecule group is missing"
       ansible.builtin.assert:
@@ -86,19 +86,19 @@
 
 # we want to avoid errors like "Failed to create temporary directory"
 - name: "Validate that inventory was refreshed"
-  hosts: molecule
+  hosts: "molecule"
   gather_facts: false
   tasks:
 
     - name: "Check uname"
       ansible.builtin.raw: "uname -a"
-      register: molecule_podman_uname_result
+      register: "molecule_podman_uname_result"
       changed_when: false
 
     - name: "Read /etc/os-release"
       ansible.builtin.slurp:
         path: "/etc/os-release"
-      register: molecule_podman_osfile
+      register: "molecule_podman_osfile"
 
     - name: "Show OS information"
       ansible.builtin.debug:

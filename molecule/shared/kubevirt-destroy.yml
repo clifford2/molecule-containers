@@ -3,27 +3,27 @@
 # SPDX-License-Identifier: MIT-0
 
 ---
-- name: Destroy
-  hosts: localhost
-  connection: local
+- name: "Destroy"
+  hosts: "localhost"
+  connection: "local"
   gather_facts: false
   tasks:
-    - name: Delete VM Instance in KubeVirt
+    - name: "Delete VM Instance in KubeVirt"
       kubernetes.core.k8s:
-        state: absent
-        kind: VirtualMachine
+        state: "absent"
+        kind: "VirtualMachine"
         name: "{{ vm.name }}"
         namespace: "{{ vm.namespace }}"
       loop: "{{ molecule_yml.platforms }}"
       loop_control:
-        loop_var: vm
+        loop_var: "vm"
 
-    - name: Delete NodePort Service in KubeVirt
+    - name: "Delete NodePort Service in KubeVirt"
       kubernetes.core.k8s:
-        state: absent
-        kind: Service
+        state: "absent"
+        kind: "Service"
         name: "{{ vm.name }}"
         namespace: "{{ vm.namespace }}"
       loop: "{{ molecule_yml.platforms }}"
       loop_control:
-        loop_var: vm
+        loop_var: "vm"

@@ -4,7 +4,7 @@
 
 ---
 - name: "Destroy molecule containers"
-  hosts: molecule
+  hosts: "molecule"
   gather_facts: false
   tasks:
 

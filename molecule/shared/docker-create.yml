@@ -6,7 +6,7 @@
 
 ---
 - name: "Create"
-  hosts: localhost
+  hosts: "localhost"
   gather_facts: false
   vars:
     molecule_inventory:
@@ -31,7 +31,7 @@
         command: "/sbin/init"
         log_driver: "json-file"
         detach: true
-      register: molecule_docker_container_result
+      register: "molecule_docker_container_result"
       loop: "{{ molecule_yml.platforms }}"
 
     - name: "Print some info"
@@ -59,7 +59,7 @@
               molecule:
                 hosts:
                   "{{ item.name }}":
-                    ansible_connection: community.docker.docker
+                    ansible_connection: "community.docker.docker"
       ansible.builtin.set_fact:
         molecule_inventory: >
           {{ molecule_inventory | combine(inventory_partial_yaml | from_yaml, recursive=true) }}
@@ -75,30 +75,29 @@
         mode: "0600"
 
     - name: "Force inventory refresh"
-      ansible.builtin.meta: refresh_inventory
+      ansible.builtin.meta: "refresh_inventory"
 
     - name: "Fail if molecule group is missing"
       ansible.builtin.assert:
         that: "'molecule' in groups"
-        fail_msg: |
-          molecule group was not found inside inventory groups: {{ groups }}
+        fail_msg: "molecule group was not found inside inventory groups: {{ groups }}"
       run_once: true # noqa: run-once[task]
 
 # we want to avoid errors like "Failed to create temporary directory"
 - name: "Validate that inventory was refreshed"
-  hosts: molecule
+  hosts: "molecule"
   gather_facts: false
   tasks:
 
     - name: "Check uname"
       ansible.builtin.raw: "uname -a"
-      register: molecule_docker_uname_result
+      register: "molecule_docker_uname_result"
       changed_when: false
 
     - name: "Read /etc/os-release"
       ansible.builtin.slurp:
         path: "/etc/os-release"
-      register: molecule_docker_osfile
+      register: "molecule_docker_osfile"
 
     - name: "Show OS information"
       ansible.builtin.debug:

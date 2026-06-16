@@ -4,7 +4,7 @@
 
 ---
 - name: "Verify"
-  hosts: all
+  hosts: "all"
   gather_facts: false
   tasks:
 
@@ -13,11 +13,11 @@
         path: "/etc/os-release"
         get_checksum: false
         follow: false
-      register: molecule_verify_stat
+      register: "molecule_verify_stat"
 
     - name: "Ensure that /etc/os-release exists"
       ansible.builtin.assert:
         that:
-          - molecule_verify_stat.stat.exists
-        fail_msg: "Oops, looks like our converge step didn't achieve it's goals"
-        success_msg: "Well done, it worked!"
+          - "molecule_verify_stat.stat.exists"
+        fail_msg: "Oops, looks like our converge step couldn't stat('/etc/os-release')"
+        success_msg: "Well done, our stat('/etc/os-release') worked!"

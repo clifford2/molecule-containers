@@ -5,7 +5,7 @@
 # Show values of key vars containing OS information
 ---
 - name: "Show OS details"
-  hosts: all
+  hosts: "all"
   become: false
   gather_facts: false
   tasks:
@@ -18,10 +18,10 @@
       ansible.builtin.setup:
         gather_subset:
           - "{{ item }}"
-      when: ansible_facts[item] is undefined
+      when: "ansible_facts[item] is undefined"
       loop:
-        - os_family
-        - virtual
+        - "os_family"
+        - "virtual"
 
     - name: 'Test whether we now have os_family info'
       ansible.builtin.debug:
@@ -31,8 +31,8 @@
     - name: 'Collect os_family info again, just for laughs'
       ansible.builtin.setup:
         gather_subset:
-          - os_family
-      when: ansible_facts['os_family'] is undefined
+          - "os_family"
+      when: "ansible_facts['os_family'] is undefined"
 
     - name: "Display all ansible_facts"
       ansible.builtin.debug:
@@ -43,15 +43,15 @@
       ansible.builtin.debug:
         msg: "grepfriendly: {{ inventory_hostname }}: {{ item }}: {{ ansible_facts[item] | lower }}"
       loop:
-        - system
-        - os_family
-        - distribution
-        - distribution_major_version
-        - distribution_release
-        - distribution_version
-        - virtualization_role
-        - virtualization_type
-        - architecture
+        - "system"
+        - "os_family"
+        - "distribution"
+        - "distribution_major_version"
+        - "distribution_release"
+        - "distribution_version"
+        - "virtualization_role"
+        - "virtualization_type"
+        - "architecture"
 
     - name: "Check whether we're in a container"
       ansible.builtin.set_fact:
@@ -68,30 +68,30 @@
     - name: 'Condition example: are we running a Debian based Linux distribution?'
       ansible.builtin.debug:
         msg: "{{ ansible_facts.os_family }}"
-      when: ansible_facts.os_family | lower == 'debian'
+      when: "ansible_facts.os_family | lower == 'debian'"
 
     - name: 'Condition example: are we running a Red Hat based Linux distribution?'
       ansible.builtin.debug:
         msg: "{{ ansible_facts.os_family }}"
-      when: ansible_facts.os_family | lower == 'redhat'
+      when: "ansible_facts.os_family | lower == 'redhat'"
 
     - name: 'Condition example: are we running a SUSE based Linux distribution?'
       ansible.builtin.debug:
         msg: "{{ ansible_facts.os_family }}"
-      when: ansible_facts.os_family | lower == 'suse'
+      when: "ansible_facts.os_family | lower == 'suse'"
 
     - name: 'Condition example: are we running AIX?'
       ansible.builtin.debug:
         msg: "{{ ansible_facts.os_family }}"
-      when: ansible_facts.os_family | lower == 'aix'
+      when: "ansible_facts.os_family | lower == 'aix'"
 
     - name: 'Is this an AIX WPAR?'
-      when: ansible_facts.os_family | lower == 'aix'
+      when: "ansible_facts.os_family | lower == 'aix'"
       block:
 
         - name: 'Check whether this is a WPAR'
-          ansible.builtin.command: uname -W
-          register: wpar
+          ansible.builtin.command: "uname -W"
+          register: "wpar"
           changed_when: false
 
         - name: 'Set is_wpar WPAR fact'
@@ -106,21 +106,21 @@
           ansible.builtin.debug:
             msg: 'This is an AIX WPAR'
           when:
-            - is_wpar
+            - "is_wpar"
 
         - name: 'Condition example:  AIX - not running in a WPAR?'
           ansible.builtin.debug:
             msg: 'This is an AIX physical / virtual host, not a WPAR'
           when:
-            - not_wpar
+            - "not_wpar"
 
     # Newer Ansible versions fail in RHEL 8 based systems with (in dnf module):
     # SyntaxError: future feature annotations is not defined
     # Details: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
     - name: 'Check Ansible compatibility for RHEL 8 or older'
       when:
-        - ansible_facts.os_family | lower == 'redhat'
-        - (ansible_facts.distribution | lower == 'redhat') or (ansible_facts.distribution | lower == 'centos')
+        - "ansible_facts.os_family | lower == 'redhat'"
+        - "(ansible_facts.distribution | lower == 'redhat') or (ansible_facts.distribution | lower == 'centos')"
       block:
 
         - name: 'Check compatibility with RHEL'
