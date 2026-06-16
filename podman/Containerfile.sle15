@@ -11,6 +11,10 @@ FROM registry.suse.com/bci/bci-init:15.7-50.7
 
 RUN zypper install -y python311 python311-rpm procps && zypper clean -a
 
+ARG BUILD_TIME
+ARG GIT_REVISION
+ARG VERSION
+
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.created="${BUILD_TIME}"

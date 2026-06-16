@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: © 2026 Clifford Weinmann <https://www.cliffordweinmann.com/>
 # SPDX-License-Identifier: MIT-0
 
-name: "Create & publish Fedora 44 container image"
+name: "Fedora 44 container image"
 
 "on":
   workflow_dispatch:
@@ -12,6 +12,7 @@ name: "Create & publish Fedora 44 container image"
     # Pattern matched specific path
     paths:
       - "podman/Containerfile.fedora44"
+      - ".github/workflows/build-podman-fedora44.yml"
 
 jobs:
 
@@ -27,9 +28,17 @@ jobs:
       - name: "Checkout repository"
         uses: "actions/checkout@v6"
 
+      # Set up QEMU for ARM64 emulation
+      - name: "Set up QEMU"
+        uses: "docker/setup-qemu-action@v4"
+
+      # Set up Docker Buildx (Creates the correct builder driver)
+      - name: "Set up Docker Buildx"
+        uses: "docker/setup-buildx-action@v4"
+
       - name: "Log in to the Container registry"
-        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+        run: docker login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Build & push container images"
         run: |
-          make .build-push-container CTPLATFORMS=fedora44
+          make build-multiarch-container CTPLATFORMS=fedora44

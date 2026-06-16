@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 # SPDX-License-Identifier: MIT-0
 
-name: "Create & publish SLE 16 container image"
+name: "SLE 16 container image"
 
 "on":
   workflow_dispatch:
@@ -11,7 +11,8 @@ name: "Create & publish SLE 16 container image"
     branches: ['main']
     # Pattern matched specific path
     paths:
-      - 'podman/Containerfile.sle16'
+      - "podman/Containerfile.sle16"
+      - ".github/workflows/build-podman-sle16.yml"
 
 jobs:
 
@@ -27,9 +28,17 @@ jobs:
       - name: "Checkout repository"
         uses: "actions/checkout@v6"
 
-      - name: "Log in to the Container registry"
-        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+      # Set up QEMU for ARM64 emulation
+      - name: "Set up QEMU"
+        uses: "docker/setup-qemu-action@v4"
 
-      - name: Build & push container images
+      # Set up Docker Buildx (Creates the correct builder driver)
+      - name: "Set up Docker Buildx"
+        uses: "docker/setup-buildx-action@v4"
+
+      - name: "Log in to the Container registry"
+        run: docker login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Build & push container images"
         run: |
-          make .build-push-container CTPLATFORMS=sle16
+          make build-multiarch-container CTPLATFORMS=sle16

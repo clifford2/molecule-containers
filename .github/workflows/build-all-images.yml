@@ -1,0 +1,51 @@
+---
+# SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
+# SPDX-License-Identifier: MIT-0
+
+name: "All images"
+
+# Not in use - trigger manually only
+"on":
+  workflow_dispatch:
+
+jobs:
+
+  build-container-images:
+    runs-on: "ubuntu-24.04"
+    permissions:
+      contents: "read"
+      packages: "write"
+      attestations: "write"
+      id-token: "write"
+
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v6"
+
+      - name: "Log in to the Container registry"
+        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Build & push container images"
+        run: |
+          make CONTAINER_ENGINE=podman build-container
+          make CONTAINER_ENGINE=podman push-container
+
+  build-vm-images:
+    runs-on: "ubuntu-24.04"
+    permissions:
+      contents: "read"
+      packages: "write"
+      attestations: "write"
+      id-token: "write"
+
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v6"
+
+      - name: "Log in to the Container registry"
+        run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Build & push kubevirt VM images"
+        run: |
+          make CONTAINER_ENGINE=podman build-vm
+          make CONTAINER_ENGINE=podman push-vm

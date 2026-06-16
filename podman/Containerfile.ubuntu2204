@@ -74,7 +74,7 @@ RUN rm -f /etc/machine-id /var/lib/dbus/machine-id
 #
 # The 'container' environment variable tells systemd that it's running inside a
 # Docker container environment.
-ENV container docker
+ENV container=docker
 
 # A different stop signal is required, so systemd will initiate a shutdown when
 # running 'docker stop <container>'.
@@ -93,6 +93,10 @@ VOLUME [ "/sys/fs/cgroup", "/run", "/run/lock", "/tmp" ]
 # the init system. CMD will be preferred in favor of ENTRYPOINT, so one may
 # override it when creating the container to e.g. to run a bash console instead.
 CMD [ "/sbin/init" ]
+
+ARG BUILD_TIME
+ARG GIT_REVISION
+ARG VERSION
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
