@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>
 # SPDX-License-Identifier: MIT-0
 
-name: "Create & publish CentOS Stream 10 KubeVirt containerDisk image"
+name: "CentOS Stream 10 KubeVirt containerDisk image"
 
 "on":
   workflow_dispatch:
@@ -11,7 +11,8 @@ name: "Create & publish CentOS Stream 10 KubeVirt containerDisk image"
     branches: ['main']
     # Pattern matched specific path
     paths:
-      - 'kubevirt/Containerfile.centos-stream10'
+      - "kubevirt/Containerfile.centos-stream10"
+      - ".github/workflows/build-kubevirt-centos-stream10.yml"
 
 jobs:
 
@@ -30,6 +31,6 @@ jobs:
       - name: "Log in to the Container registry"
         run: podman login ghcr.io --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: "Build name: Build & push kubevirt VM images push kubevirt VM images"
+      - name: "Build & push kubevirt VM images"
         run: |
           make .build-push-vm VMPLATFORMS=centos-stream10

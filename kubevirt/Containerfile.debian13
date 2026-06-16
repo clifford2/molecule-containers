@@ -2,14 +2,14 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG BUILD_TIME
-ARG GIT_REVISION
-
 FROM scratch
 
 # Obtain latest image name from https://cdimage.debian.org/images/cloud/trixie/
-ARG VERSION=20260112-2355
+ARG VERSION=20260601-2496
 ADD --chown=107:107 --chmod=0644 https://cdimage.debian.org/images/cloud/trixie/${VERSION}/debian-13-genericcloud-amd64-${VERSION}.qcow2 /disk/
+
+ARG BUILD_TIME
+ARG GIT_REVISION
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"

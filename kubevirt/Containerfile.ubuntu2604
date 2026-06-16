@@ -2,14 +2,14 @@
 #
 # SPDX-License-Identifier: MIT-0
 
-ARG BUILD_TIME
-ARG GIT_REVISION
-
 FROM scratch
 
 # Obtain latest image from https://cloud-images.ubuntu.com/resolute/
-ARG VERSION=20260421
+ARG VERSION=20260520
 ADD --chown=107:107 --chmod=0644 https://cloud-images.ubuntu.com/resolute/${VERSION}/resolute-server-cloudimg-amd64.img /disk/
+
+ARG BUILD_TIME
+ARG GIT_REVISION
 
 LABEL maintainer="Clifford Weinmann <https://www.cliffordweinmann.com/>"
 LABEL org.opencontainers.image.authors="Clifford Weinmann <https://www.cliffordweinmann.com/>"
