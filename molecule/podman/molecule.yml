@@ -35,11 +35,11 @@ platforms:
     command: "/sbin/init"
   # CentOS Stream 8
   - name: "molecule-example-centos8"
-    image: "ghcr.io/clifford2/molecule-platform:centos-stream8.v1.0.0"
+    image: "ghcr.io/clifford2/molecule-platform:centos-stream8.v1.0.1-20240528"
     command: "/sbin/init"
   # CentOS Stream 9
   - name: "molecule-example-centos9"
-    image: "ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.1-20260422"
+    image: "ghcr.io/clifford2/molecule-platform:centos-stream9.v1.0.1-20260615"
     command: "/sbin/init"
   # CentOS Stream 10
   - name: "molecule-example-centos10"
@@ -47,11 +47,11 @@ platforms:
     command: "/sbin/init"
   # Debian 12 (Bookworm)
   - name: "molecule-example-debian12"
-    image: "ghcr.io/clifford2/molecule-platform:debian12.v1.0.7"
+    image: "ghcr.io/clifford2/molecule-platform:debian12.v1.0.8"
     command: "/sbin/init"
   # Debian 13 (Trixie)
   - name: "molecule-example-debian13"
-    image: "ghcr.io/clifford2/molecule-platform:debian13.v1.0.3"
+    image: "ghcr.io/clifford2/molecule-platform:debian13.v1.0.4"
     command: "/sbin/init"
   # Fedora 40
   - name: "molecule-example-fedora40"

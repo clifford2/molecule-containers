@@ -60,7 +60,8 @@ from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-
 
 ### Build Instructions
 
-Container images built from these files are available at [ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform).
+Container images for `amd64` & `arm64`, built from these files, are available at
+[ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform).
 
 To build your own images from this source, you can build all images with:
 
@@ -165,7 +166,8 @@ Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
 ### Build Instructions
 
-Container images built from these files are available at [ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk).
+Container images for `amd64`, built from these files, are available at
+[ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk).
 
 To build your own images from this source, you can build all images with:
 
