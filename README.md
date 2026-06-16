@@ -17,21 +17,21 @@ Images for two testing scenarios are available, namely:
 ## Container Images
 
 For many Ansible playbooks, one of the easiest ways to test them against
-different Linux distributions & versions is in containers.
+different Linux distributions & versions, is in containers.
 
 One limitation of most Linux base container images is that they are created
 primarily for running a single application, and therefore do not have any
-init. In contrast, many playbooks, likely written for VMs, assume the presense
-of systemd. This is addressed by the images in this repository, by simply
-adding systemd to the base images.
+init. In contrast, many playbooks are written for VMs, and assume the presense
+of systemd.  The images in this repository addresses this, by simply adding
+systemd to the base images.
 
 ### Platforms With Existing Images
 
 The following images already contain systemd, and can be used as is:
 
 - Red Hat Universal Base Image 8: `registry.access.redhat.com/ubi8/ubi-init:8.10`
-- Red Hat Universal Base Image 9: `registry.access.redhat.com/ubi9/ubi-init:9.7`
-- Red Hat Universal Base Image 10: `registry.access.redhat.com/ubi10/ubi-init:10.1`
+- Red Hat Universal Base Image 9: `registry.access.redhat.com/ubi9/ubi-init:9.8`
+- Red Hat Universal Base Image 10: `registry.access.redhat.com/ubi10/ubi-init:10.2`
 - CentOS Stream 10: [`quay.io/centos/centos:stream10`](https://quay.io/repository/centos/centos?tab=tags&tag=stream10)
 
 ### Our Custom Images
@@ -106,7 +106,7 @@ molecule test -s podman
 ```
 
 Please note the use of Ansible 2.16 here. This is because [Newer versions of Ansible don't work with RHEL 8](https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8/), particularly for DNF package tasks.
-It is also worth noting that Red Hat use Ansible 2.16 in the Ansible Automation Platform (as of version 2.6, released in 2025).
+It is also worth noting that Ansible Core 2.16 is also the default version in Ansible Automation Platform 2.5, 2.6 & 2.7 (2026-06).
 
 More recent Ansible versions work for all other images though.
 Our most recent tests were performed on 2025-01-17, using python 3.12, ansible-core 2.20.1 and molecule 25.4.0.
@@ -156,7 +156,7 @@ Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 | Linux Distribution              | Containerfile                                                             | Image name                           |
 | ------------------------------- | ------------------------------------------------------------------------- | ------------------------------------ |
 | CentOS Stream 9                 | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos9       |
-| CentOS Stream 10                | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos9       |
+| CentOS Stream 10                | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos10      |
 | Debian 12 (Bookworm)            | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12      |
 | Debian 13 (Trixie)              | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13      |
 | openSUSE Leap 15.6              | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:opensuse-15.6 |
