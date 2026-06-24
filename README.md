@@ -38,22 +38,22 @@ The following images already contain systemd, and can be used as is:
 
 Our Containerfiles (in the [`podman/`](podman) directory):
 
-| Linux Distribution                       | Containerfile                                                         | Image name                   |
-| ---------------------------------------- | --------------------------------------------------------------------- | ---------------------------- |
-| CentOS Stream 8 (*EOL as of 2024-05-31*) | [`Containerfile.centos-stream8`](podman/Containerfile.centos-stream8) | molecule-platform:centos8    |
-| CentOS Stream 9                          | [`Containerfile.centos-stream9`](podman/Containerfile.centos-stream9) | molecule-platform:centos9    |
-| Debian 12 (Bookworm)                     | [`Containerfile.debian12`](podman/Containerfile.debian12)             | molecule-platform:debian12   |
-| Debian 13 (Trixie)                       | [`Containerfile.debian13`](podman/Containerfile.debian13)             | molecule-platform:debian13   |
-| Fedora 40 (*EOL*)                        | [`Containerfile.fedora40`](podman/Containerfile.fedora40)             | molecule-platform:fedora40   |
-| Fedora 41 (*EOL 2025-12-15*)             | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41   |
-| Fedora 42                                | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42   |
-| Fedora 43                                | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43   |
-| Fedora 44                                | [`Containerfile.fedora44`](podman/Containerfile.fedora44)             | molecule-platform:fedora44   |
-| SLE BCI (SLES 15) based                  | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15      |
-| SLE BCI (SLES 16) based                  | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16      |
-| Ubuntu 22.04 (Jammy Jellyfish)           | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204 |
-| Ubuntu 24.04 (Noble Numbat)              | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404 |
-| Ubuntu 26.04 (Resolute Raccoon)          | [`Containerfile.ubuntu2604`](podman/Containerfile.ubuntu2604)         | molecule-platform:ubuntu2604 |
+| Linux Distribution                       | Containerfile                                                         | Image name                       |
+| ---------------------------------------- | --------------------------------------------------------------------- | -------------------------------- |
+| CentOS Stream 8 (*EOL as of 2024-05-31*) | [`Containerfile.centos-stream8`](podman/Containerfile.centos-stream8) | molecule-platform:centos-stream8 |
+| CentOS Stream 9                          | [`Containerfile.centos-stream9`](podman/Containerfile.centos-stream9) | molecule-platform:centos-stream9 |
+| Debian 12 (Bookworm)                     | [`Containerfile.debian12`](podman/Containerfile.debian12)             | molecule-platform:debian12       |
+| Debian 13 (Trixie)                       | [`Containerfile.debian13`](podman/Containerfile.debian13)             | molecule-platform:debian13       |
+| Fedora 40 (*EOL*)                        | [`Containerfile.fedora40`](podman/Containerfile.fedora40)             | molecule-platform:fedora40       |
+| Fedora 41 (*EOL 2025-12-15*)             | [`Containerfile.fedora41`](podman/Containerfile.fedora41)             | molecule-platform:fedora41       |
+| Fedora 42                                | [`Containerfile.fedora42`](podman/Containerfile.fedora42)             | molecule-platform:fedora42       |
+| Fedora 43                                | [`Containerfile.fedora43`](podman/Containerfile.fedora43)             | molecule-platform:fedora43       |
+| Fedora 44                                | [`Containerfile.fedora44`](podman/Containerfile.fedora44)             | molecule-platform:fedora44       |
+| SLE BCI (SLES 15) based                  | [`Containerfile.sle15`](podman/Containerfile.sle15)                   | molecule-platform:sle15          |
+| SLE BCI (SLES 16) based                  | [`Containerfile.sle16`](podman/Containerfile.sle16)                   | molecule-platform:sle16          |
+| Ubuntu 22.04 (Jammy Jellyfish)           | [`Containerfile.ubuntu2204`](podman/Containerfile.ubuntu2204)         | molecule-platform:ubuntu2204     |
+| Ubuntu 24.04 (Noble Numbat)              | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404     |
+| Ubuntu 26.04 (Resolute Raccoon)          | [`Containerfile.ubuntu2604`](podman/Containerfile.ubuntu2604)         | molecule-platform:ubuntu2604     |
 
 *Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian),
 from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-debian-systemd).*
@@ -61,7 +61,8 @@ from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-
 ### Build Instructions
 
 Container images for `amd64` & `arm64`, built from these files, are available at
-[ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform).
+[ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform),
+as `ghcr.io/clifford2/<image-name-from-list-above>`, for example `ghcr.io/clifford2/molecule-platform:centos-stream9`.
 
 To build your own images from this source, you can build all images with:
 
@@ -114,7 +115,7 @@ Our most recent tests were performed on 2025-01-17, using python 3.12, ansible-c
 
 #### Docker
 
-An exampl Molecule scenario also exists for [Docker](https://www.docker.com/) containers, in [`docker`](molecule/docker).
+An example Molecule scenario also exists for [Docker](https://www.docker.com/) containers, in [`docker`](molecule/docker).
 This currently works for all images except for Debian based images (where there is an unresolved cgroup permission problem).
 Run it with these commands:
 
