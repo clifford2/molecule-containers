@@ -107,7 +107,7 @@ ansible-galaxy install -r molecule/podman/collections.yml
 molecule test -s podman
 ```
 
-Please note the use of **Ansible 2.16** here. This is because or test containers include RHEL 8 based images, and
+Please note the use of **Ansible 2.16** here. This is because our test hosts include RHEL 8 based containers, and
 [Newer versions of Ansible don't work with RHEL 8](https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8/),
 particularly for DNF package tasks.
 It is worth noting that Ansible Core 2.16 is also the default version in Ansible Automation Platform 2.5, 2.6 & 2.7 (2026-06).
@@ -191,7 +191,7 @@ then run Molecule with:
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install molecule 'ansible-core>=2.16,<2.17'
+python3 -m pip install molecule ansible-core
 python3 -m pip install -r molecule/kubevirt/requirements.txt
 ansible-galaxy install -r molecule/kubevirt/collections.yml
 molecule test -s kubevirt
