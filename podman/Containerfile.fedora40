@@ -12,6 +12,7 @@ ARG GIT_REVISION
 # Date suffix is changed to trigger new build, and is based on build date of most recent image at the time
 ARG VERSION=1.0.0-20260102
 
+# Last updated 2025-05-13T07:48:55.650698239Z
 FROM quay.io/fedora/fedora:40
 
 RUN dnf -y install systemd procps-ng python3.12 python3-dnf && dnf clean all
