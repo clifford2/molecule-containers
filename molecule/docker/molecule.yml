@@ -71,6 +71,10 @@ platforms:
   - name: "molecule-example-fedora43"
     image: "ghcr.io/clifford2/molecule-platform:fedora43.v1.0.0-20260624"
     command: "/sbin/init"
+  # Fedora 44
+  - name: "molecule-example-fedora44"
+    image: "ghcr.io/clifford2/molecule-platform:fedora44.v1.0.0-20260624"
+    command: "/sbin/init"
   # SLES 15
   - name: "molecule-example-sle15"
     image: "ghcr.io/clifford2/molecule-platform:sle15.v1.0.8"
@@ -88,4 +92,9 @@ platforms:
 #  # Failed to mount cgroup (type cgroup) on /sys/fs/cgroup/systemd (MS_NOSUID|MS_NODEV|MS_NOEXEC "none,name=systemd"): Operation not permitted
 #  - name: "molecule-example-ubuntu2404"
 #    image: "ghcr.io/clifford2/molecule-platform:ubuntu2404.v1.0.5"
+#    command: "/sbin/init"
+#  # Ubuntu 26.04 LTS
+#  # Failed in Docker 29.6.0 on Ubuntu 24.04 with: Unknown filesystem type ef53 mounted on /sys/fs/cgroup/.
+#  - name: "molecule-example-ubuntu2604"
+#    image: "ghcr.io/clifford2/molecule-platform:ubuntu2604.v1.0.1"
 #    command: "/sbin/init"
