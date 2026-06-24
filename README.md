@@ -59,7 +59,7 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 
 Container images for `amd64` & `arm64`, built from these files, are available at
 [ghcr.io/clifford2/molecule-platform](https://github.com/clifford2/molecule-containers/pkgs/container/molecule-platform),
-as `ghcr.io/clifford2/<image-name-from-list-above>`, for example `ghcr.io/clifford2/molecule-platform:centos-stream9`.
+as `ghcr.io/clifford2/<image-name-from-list-above>` (for example `ghcr.io/clifford2/molecule-platform:centos-stream9`).
 
 To build your own images from this source, you can build all images with:
 
@@ -127,9 +127,13 @@ molecule test -s docker
 
 ### Apple macOS Container Machine
 
-[Container machine](https://github.com/apple/container/blob/main/docs/container-machine.md) provides a highly integrated Linux environment that works seamlessly on your Mac. Container machines are fast, lightweight and persistent. They are based on standard OCI images that can be built and shared. Host integrations such as automatic user and home directory sharing provide quick and easy access to your Linux environment no matter where you are in a terminal.
+Quoting from [github.com/apple/container](https://github.com/apple/container/blob/main/docs/container-machine.md):
 
-Any Linux image that includes `/sbin/init` works as a container machine, which implies the images in this repo might be handy for that purpose too :-)
+> Container machine provides a highly integrated Linux environment that works seamlessly on your Mac. Container machines are fast, lightweight and persistent. They are based on standard OCI images that can be built and shared. Host integrations such as automatic user and home directory sharing provide quick and easy access to your Linux environment no matter where you are in a terminal.
+>
+> Any Linux image that includes `/sbin/init` works as a container machine.
+
+The images in this repo might therefore be handy for that purpose too :-)
 
 ## KubeVirt containerDisk Images
 
@@ -151,7 +155,7 @@ Available images include:
 	- [Ubuntu](https://quay.io/repository/containerdisks/ubuntu) 22.04, 24.04, 25.04
 	- [OpenSUSE Tumbleweed](https://quay.io/repository/containerdisks/opensuse-tumbleweed)
 	- [OpenSUSE Leap](https://quay.io/repository/containerdisks/opensuse-leap) 15.6 & 16.0
-	- [Debian]https://quay.io/repository/containerdisks/debian) 11 - 13
+	- [Debian](https://quay.io/repository/containerdisks/debian) 11 - 13
 - RHEL 9: `registry.redhat.io/rhel9/rhel-guest-image` (*requires authentication to pull*)
 - RHEL 10: `registry.redhat.io/rhel8/rhel-guest-image` (*requires authentication to pull*)
 
@@ -173,7 +177,7 @@ Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
 Container images for `amd64`, built from these files, are available at
 [ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk),
-as `ghcr.io/clifford2/<image-name-from-list-above>`, for example `ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10`.
+as `ghcr.io/clifford2/<image-name-from-list-above>` (for example `ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10`).
 
 To build your own images from this source, you can build all images with:
 
