@@ -38,7 +38,7 @@
         - name: "Create ssh NodePort Kubernetes Services"  # Creates a new NodePort service in Kubernetes
           kubernetes.core.k8s:
             state: "present"
-            definition:
+            resource_definition:
               apiVersion: "v1"
               kind: "Service"
               metadata:

@@ -3,10 +3,17 @@
 # SPDX-License-Identifier: MIT-0
 
 ---
+- name: "Ensure VM namespace exists"
+  kubernetes.core.k8s:
+    api_version: "v1"
+    kind: "Namespace"
+    name: "{{ vm.namespace }}"
+    state: "present"
+
 - name: "Create VM in KubeVirt"
   kubernetes.core.k8s:
     state: "present"
-    definition:
+    resource_definition:
       apiVersion: "kubevirt.io/v1" # KubeVirt's API version
       kind: "VirtualMachine" # The type of Kubernetes resource to create
       metadata:
