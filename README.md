@@ -55,9 +55,6 @@ Our Containerfiles (in the [`podman/`](podman) directory):
 | Ubuntu 24.04 (Noble Numbat)              | [`Containerfile.ubuntu2404`](podman/Containerfile.ubuntu2404)         | molecule-platform:ubuntu2404     |
 | Ubuntu 26.04 (Resolute Raccoon)          | [`Containerfile.ubuntu2604`](podman/Containerfile.ubuntu2604)         | molecule-platform:ubuntu2604     |
 
-*Our Debian & Ubuntu images are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian),
-from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-debian-systemd).*
-
 ### Build Instructions
 
 Container images for `amd64` & `arm64`, built from these files, are available at
@@ -73,8 +70,8 @@ make build-container
 Or build individual images with these commands:
 
 ```sh
-make CTPLATFORMS=centos8 build-container
-make CTPLATFORMS=centos9 build-container
+make CTPLATFORMS=centos-stream8 build-container
+make CTPLATFORMS=centos-stream9 build-container
 make CTPLATFORMS=debian12 build-container
 make CTPLATFORMS=debian13 build-container
 make CTPLATFORMS=fedora40 build-container
@@ -128,17 +125,24 @@ ansible-galaxy install -r molecule/docker/collections.yml
 molecule test -s docker
 ```
 
+### Apple macOS Container Machine
+
+[Container machine](https://github.com/apple/container/blob/main/docs/container-machine.md) provides a highly integrated Linux environment that works seamlessly on your Mac. Container machines are fast, lightweight and persistent. They are based on standard OCI images that can be built and shared. Host integrations such as automatic user and home directory sharing provide quick and easy access to your Linux environment no matter where you are in a terminal.
+
+Any Linux image that includes `/sbin/init` works as a container machine, which implies the images in this repo might be handy for that purpose too :-)
+
 ## KubeVirt containerDisk Images
 
 For some Ansible playbooks, testing in a container isn't possible. Examples include time sync and auditd.
 
 For such playbooks, we can test in a VM, and one way to do that is inside Kubernetes, with [KubeVirt](https://kubevirt.io/).
 
-KubeVirt uses `containerDisk` images, which store and distribute VM disks in the container image registry.
+KubeVirt uses [`containerDisk`](https://kubevirt.io/user-guide/storage/disks_and_volumes/#containerdisk)
+images, which store and distribute VM disks in the container image registry.
 
 ### Platforms With Existing Images
 
-As of 2026-01, Containerdisks are readily available elsewhere, and are *usually more up to date* than the ones in this repository.
+As of 2026-06, Containerdisks are readily available elsewhere, and are *usually more up to date* than the ones in this repository.
 Available images include:
 
 - [KubeVirt curated Containerdisks](https://github.com/kubevirt/containerdisks). As of 2026-01, available images include:
@@ -146,7 +150,7 @@ Available images include:
 	- [Fedora](https://quay.io/repository/containerdisks/fedora) 39 - 44
 	- [Ubuntu](https://quay.io/repository/containerdisks/ubuntu) 22.04, 24.04, 25.04
 	- [OpenSUSE Tumbleweed](https://quay.io/repository/containerdisks/opensuse-tumbleweed)
-	- [OpenSUSE Leap](https://quay.io/repository/containerdisks/opensuse-leap) 15.6
+	- [OpenSUSE Leap](https://quay.io/repository/containerdisks/opensuse-leap) 15.6 & 16.0
 	- [Debian]https://quay.io/repository/containerdisks/debian) 11 - 13
 - RHEL 9: `registry.redhat.io/rhel9/rhel-guest-image` (*requires authentication to pull*)
 - RHEL 10: `registry.redhat.io/rhel8/rhel-guest-image` (*requires authentication to pull*)
@@ -155,20 +159,21 @@ Available images include:
 
 Our Containerfiles (in the [`kubevirt/`](kubevirt) directory):
 
-| Linux Distribution              | Containerfile                                                             | Image name                           |
-| ------------------------------- | ------------------------------------------------------------------------- | ------------------------------------ |
-| CentOS Stream 9                 | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos9       |
-| CentOS Stream 10                | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos10      |
-| Debian 12 (Bookworm)            | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12      |
-| Debian 13 (Trixie)              | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13      |
-| openSUSE Leap 15.6              | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:opensuse-15.6 |
-| Ubuntu 24.04 (Noble Numbat)     | [`Containerfile.ubuntu2404`](kubevirt/Containerfile.ubuntu2404)           | kubevirt-containerdisk:ubuntu2404    |
-| Ubuntu 26.04 (Resolute Raccoon) | [`Containerfile.ubuntu2604`](kubevirt/Containerfile.ubuntu2604)           | kubevirt-containerdisk:ubuntu2604    |
+| Linux Distribution              | Containerfile                                                             | Image name                             |
+| ------------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| CentOS Stream 9                 | [`Containerfile.centos-stream9`](kubevirt/Containerfile.centos-stream9)   | kubevirt-containerdisk:centos-stream9  |
+| CentOS Stream 10                | [`Containerfile.centos-stream10`](kubevirt/Containerfile.centos-stream10) | kubevirt-containerdisk:centos-stream10 |
+| Debian 12 (Bookworm)            | [`Containerfile.debian12`](kubevirt/Containerfile.debian12)               | kubevirt-containerdisk:debian12        |
+| Debian 13 (Trixie)              | [`Containerfile.debian13`](kubevirt/Containerfile.debian13)               | kubevirt-containerdisk:debian13        |
+| openSUSE Leap 15.6              | [`Containerfile.opensuse-15.6`](kubevirt/Containerfile.opensuse-15.6)     | kubevirt-containerdisk:opensuse-15.6   |
+| Ubuntu 24.04 (Noble Numbat)     | [`Containerfile.ubuntu2404`](kubevirt/Containerfile.ubuntu2404)           | kubevirt-containerdisk:ubuntu2404      |
+| Ubuntu 26.04 (Resolute Raccoon) | [`Containerfile.ubuntu2604`](kubevirt/Containerfile.ubuntu2604)           | kubevirt-containerdisk:ubuntu2604      |
 
 ### Build Instructions
 
 Container images for `amd64`, built from these files, are available at
-[ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk).
+[ghcr.io/clifford2/kubevirt-containerdisk](https://github.com/clifford2/molecule-containers/pkgs/container/kubevirt-containerdisk),
+as `ghcr.io/clifford2/<image-name-from-list-above>`, for example `ghcr.io/clifford2/kubevirt-containerdisk:centos-stream10`.
 
 To build your own images from this source, you can build all images with:
 
@@ -180,7 +185,8 @@ make build-vm
 
 An example Molecule configuration can be found in [`molecule/kubevirt/`](molecule/kubevirt).
 
-Run with:
+To use this example, deploy KubeVirt (try their [Quickstarts](https://kubevirt.io/user-guide/quickstarts/)),
+then run Molecule with:
 
 ```sh
 python3 -m venv .venv
@@ -193,7 +199,8 @@ molecule test -s kubevirt
 
 ## License & Disclaimer
 
-Our Debian & Ubuntu Containerfiles are based on <https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile>,
+Our Debian & Ubuntu Containerfiles are based on [`Containerfile.example-debian`](podman/Containerfile.example-debian),
+from [github.com/alehaa/docker-debian-systemd](https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile),
 which is © 2018-2019 Alexander Haase <ahaase@alexhaase.de>.
 
 Modifications based on that file, and all other files, are © 2025 Clifford Weinmann <https://www.cliffordweinmann.com/>.
